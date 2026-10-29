@@ -1,1032 +1,660 @@
+```html
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="h-full bg-slate-950 text-slate-100">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <title>Minecraft Bedrock HTML - Animales en Superficie</title>
-    <!-- Tailwind CSS for UI -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador 3D de Archivos Excel</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Three.js Engine -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS CDN para lectura de Excel / CSV -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- OrbitControls para Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Lucide / Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: none;
-            -webkit-touch-callout: none;
-        }
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #000;
-            position: fixed;
-        }
-        #canvas-container {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-        /* Crosshair */
-        #crosshair {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
-            pointer-events: none;
-            z-index: 10;
-        }
-        #crosshair::before, #crosshair::after {
-            content: '';
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.8);
-            mix-blend-mode: difference;
-        }
-        #crosshair::before {
-            top: 9px;
-            left: 0;
-            width: 20px;
-            height: 2px;
-        }
-        #crosshair::after {
-            top: 0;
-            left: 9px;
-            width: 2px;
-            height: 20px;
-        }
-        /* Bedrock Style Hotbar */
-        .hotbar-container {
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid #3c3c3c;
-            border-radius: 4px;
-            backdrop-filter: blur(4px);
-            transition: all 0.2s ease;
-        }
-        .hotbar-slot {
-            width: 48px;
-            height: 48px;
-            border: 2px solid #282828;
-            background: rgba(139, 139, 139, 0.3);
-            position: relative;
-            transition: all 0.1s ease;
-        }
-        .hotbar-slot.active {
-            border: 3px solid #ffffff;
-            transform: scale(1.08);
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-        .slot-number {
-            position: absolute;
-            top: 2px;
-            left: 4px;
-            font-size: 10px;
-            color: #fff;
-            text-shadow: 1px 1px 0 #000;
-            font-weight: bold;
-        }
-        /* Touch Controls */
-        .touch-button {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(2px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            touch-action: none;
-        }
-        .touch-button:active {
-            background: rgba(255, 255, 255, 0.4);
-        }
-        /* Minecraft UI Buttons */
-        .mc-button {
-            background: linear-gradient(180deg, #7d7d7d 0%, #4a4a4a 100%);
-            border: 2px solid #000;
-            border-top-color: #b0b0b0;
-            border-left-color: #b0b0b0;
-            box-shadow: inset -2px -2px 0px #2a2a2a;
-            color: #ffffff;
-            text-shadow: 2px 2px 0px #000000;
-            font-weight: bold;
-        }
-        .mc-button:hover {
-            background: linear-gradient(180deg, #8d8d8d 0%, #5a5a5a 100%);
-        }
-        .mc-button:active {
-            background: linear-gradient(180deg, #4a4a4a 0%, #7d7d7d 100%);
-            border-top-color: #2a2a2a;
-            border-left-color: #2a2a2a;
-        }
-        /* Lightning Flash Effect */
-        @keyframes flash {
-            0% { background-color: rgba(255, 255, 255, 0); }
-            50% { background-color: rgba(255, 255, 255, 0.8); }
-            100% { background-color: rgba(255, 255, 255, 0); }
-        }
-        .lightning-flash {
-            animation: flash 0.3s ease-out;
+        body { font-family: 'Inter', sans-serif; }
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        ::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.8); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.8); }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
     </style>
 </head>
-<body class="select-none overflow-hidden">
+<body class="h-full overflow-hidden flex flex-col antialiased">
 
-    <!-- Canvas Container -->
-    <div id="canvas-container"></div>
-    <div id="lightning-overlay" class="absolute inset-0 pointer-events-none z-5"></div>
-
-    <!-- Crosshair -->
-    <div id="crosshair"></div>
-
-    <!-- UI Overlay (HUD) -->
-    <div id="hud" class="absolute inset-0 pointer-events-none z-10 flex flex-col justify-between p-4">
-        <!-- Top Stats / Info -->
-        <div class="flex justify-between items-start">
-            <div class="bg-black/60 p-3 rounded-lg border border-gray-700 text-white text-xs font-mono backdrop-blur-sm pointer-events-auto">
-                <div class="font-bold text-green-400 mb-1">MINECRAFT BEDROCK HTML</div>
-                <div id="fps-counter">FPS: 60</div>
-                <div id="pos-counter">XYZ: 0, 0, 0</div>
-                <div id="time-counter">Hora: 09:00 (Día)</div>
-                <div id="weather-counter" class="text-yellow-300">Clima: Despejado</div>
+    <!-- Header Principal -->
+    <header class="h-16 border-b border-slate-800/80 bg-slate-900/80 backdrop-blur flex items-center justify-between px-6 z-20 shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="p-2.5 bg-indigo-600/20 text-indigo-400 rounded-xl border border-indigo-500/30">
+                <i class="fa-solid fa-chart-line text-lg"></i>
             </div>
-
-            <!-- Top Action Buttons -->
-            <div class="pointer-events-auto flex flex-wrap gap-2 justify-end max-w-xs">
-                <button id="btn-weather-time" class="mc-button px-3 py-2 text-xs rounded cursor-pointer bg-green-700">
-                    <i class="fa-solid fa-cloud-sun mr-1"></i> Clima & Hora
-                </button>
-                <button id="btn-config-touch" class="mc-button px-3 py-2 text-xs rounded cursor-pointer bg-blue-700">
-                    <i class="fa-solid fa-sliders mr-1"></i> Controles
-                </button>
-                <button id="btn-pause" class="mc-button px-3 py-2 text-xs rounded cursor-pointer">
-                    <i class="fa-solid fa-pause mr-1"></i> Pausa
-                </button>
-            </div>
-        </div>
-
-        <!-- Hotbar Container (Inventario de Bloques) -->
-        <div id="hotbar-wrapper" class="w-full flex justify-center pb-2 pointer-events-auto transition-all">
-            <div class="hotbar-container p-1 flex gap-1 sm:gap-2" id="hotbar"></div>
-        </div>
-    </div>
-
-    <!-- Mobile Touch Controls -->
-    <div id="touch-controls" class="absolute inset-0 pointer-events-none z-20">
-        <!-- Left Joystick Area -->
-        <div id="joystick-zone" class="absolute bottom-12 left-8 w-36 h-36 rounded-full bg-white/10 border-2 border-white/20 pointer-events-auto flex items-center justify-center transition-all">
-            <div id="joystick-knob" class="w-16 h-16 rounded-full bg-white/40 border border-white/60"></div>
-        </div>
-
-        <!-- Right Action Buttons -->
-        <div id="action-buttons-container" class="absolute bottom-12 right-8 flex flex-col gap-4 pointer-events-auto items-end transition-all">
-            <div class="flex gap-3">
-                <button id="btn-break" class="touch-button w-16 h-16 bg-red-500/40 border-red-400/60 text-xs font-bold">ROMPER</button>
-                <button id="btn-place" class="touch-button w-16 h-16 bg-green-500/40 border-green-400/60 text-xs font-bold">PONER</button>
-            </div>
-            <button id="btn-jump" class="touch-button w-16 h-16 bg-blue-500/40 border-blue-400/60">
-                <i class="fa-solid fa-arrow-up"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Weather & Time Configuration Modal -->
-    <div id="weather-time-modal" class="absolute inset-0 bg-black/80 z-50 flex items-center justify-center pointer-events-auto hidden backdrop-blur-md">
-        <div class="bg-gray-900 border-2 border-gray-700 p-6 rounded-xl max-w-md w-full text-white shadow-2xl space-y-4">
-            <h2 class="text-xl font-bold text-green-400 text-center"><i class="fa-solid fa-clock mr-2"></i>Clima y Reloj Realms</h2>
-            
             <div>
-                <label class="block text-gray-300 mb-1 text-xs font-bold">Establecer Hora del Día:</label>
-                <div class="grid grid-cols-3 gap-2">
-                    <button class="mc-button py-2 text-xs rounded" onclick="setTimePreset(0.25)">Amanecer (06:00)</button>
-                    <button class="mc-button py-2 text-xs rounded" onclick="setTimePreset(0.37)">Día (09:00)</button>
-                    <button class="mc-button py-2 text-xs rounded" onclick="setTimePreset(0.50)">Mediodía (12:00)</button>
-                    <button class="mc-button py-2 text-xs rounded" onclick="setTimePreset(0.75)">Atardecer (18:00)</button>
-                    <button class="mc-button py-2 text-xs rounded" onclick="setTimePreset(0.87)">Noche (21:00)</button>
-                    <button class="mc-button py-2 text-xs rounded" onclick="setTimePreset(0.00)">Medianoche (00:00)</button>
-                </div>
+                <h1 class="text-base font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">
+                    Excel 3D Data Analytics
+                </h1>
+                <p class="text-xs text-slate-400">Visualización tridimensional dinámica de hojas de cálculo</p>
             </div>
+        </div>
 
-            <div>
-                <label class="block text-gray-300 mb-1 text-xs font-bold">Velocidad del Reloj:</label>
-                <select id="select-timespeed" class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm text-white">
-                    <option value="0">Pausado (0x)</option>
-                    <option value="1" selected>Realms Normal (1x - 20 min)</option>
-                    <option value="5">Rápido (5x - 4 min)</option>
-                    <option value="15">Ultra Rápido (15x - 1.3 min)</option>
+        <!-- Controles rápidos -->
+        <div class="flex items-center space-x-3">
+            <!-- Selector de columna activa -->
+            <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs">
+                <span class="text-slate-400"><i class="fa-solid fa-filter mr-1"></i> Eje Y (Valor):</span>
+                <select id="columnSelect" class="bg-slate-900 text-indigo-300 rounded border border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 px-2 py-0.5 font-medium">
+                    <!-- Opciones dinámicas -->
                 </select>
             </div>
 
-            <div>
-                <label class="block text-gray-300 mb-1 text-xs font-bold">Clima Atmosférico:</label>
-                <div class="grid grid-cols-3 gap-2">
-                    <button class="mc-button py-2 text-xs rounded bg-sky-700" onclick="setWeather('clear')">☀️ Despejado</button>
-                    <button class="mc-button py-2 text-xs rounded bg-blue-900" onclick="setWeather('rain')">🌧️ Lluvia</button>
-                    <button class="mc-button py-2 text-xs rounded bg-purple-900" onclick="setWeather('storm')">⚡ Tormenta</button>
-                </div>
-            </div>
+            <!-- Botón Tabla 2D Toggle -->
+            <button id="toggleTableBtn" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 text-xs transition-all">
+                <i class="fa-solid fa-table"></i>
+                <span id="tableBtnText">Mostrar Tabla 2D</span>
+            </button>
 
-            <div class="pt-2">
-                <button id="btn-close-wt" class="mc-button py-2.5 rounded w-full text-sm">Cerrar y Aplicar</button>
-            </div>
+            <!-- Reset Vista Camera -->
+            <button id="resetCamBtn" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 text-xs transition-all" title="Restablecer Cámara">
+                <i class="fa-solid fa-arrows-to-dot"></i>
+            </button>
         </div>
-    </div>
+    </header>
 
-    <!-- Touch & Hotbar Configuration Modal -->
-    <div id="config-modal" class="absolute inset-0 bg-black/80 z-50 flex items-center justify-center pointer-events-auto hidden backdrop-blur-md">
-        <div class="bg-gray-900 border-2 border-gray-700 p-6 rounded-xl max-w-sm w-full text-white shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <h2 class="text-xl font-bold text-green-400 text-center"><i class="fa-solid fa-sliders mr-2"></i>Controles y Hotbar</h2>
-            <div>
-                <label class="block text-gray-300 mb-1 text-xs">Tamaño de Controles y Hotbar:</label>
-                <input type="range" id="range-scale" min="0.6" max="1.5" step="0.1" value="1.0" class="w-full accent-green-500 cursor-pointer">
-            </div>
-            <div>
-                <label class="block text-gray-300 mb-1 text-xs">Opacidad / Transparencia:</label>
-                <input type="range" id="range-opacity" min="0.1" max="1.0" step="0.1" value="0.4" class="w-full accent-green-500 cursor-pointer">
-            </div>
-            <div>
-                <label class="block text-gray-300 mb-1 text-xs">Posición del Joystick Izquierdo:</label>
-                <div class="grid grid-cols-2 gap-2">
-                    <button id="pos-joystick-bottom" class="mc-button py-2 text-xs rounded">Esquina Abajo</button>
-                    <button id="pos-joystick-mid" class="mc-button py-2 text-xs rounded">Más Arriba</button>
-                </div>
-            </div>
-            <div>
-                <label class="block text-gray-300 mb-1 text-xs">Inventario de Bloques (Hotbar):</label>
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <button id="pos-hotbar-bottom" class="mc-button py-2 text-xs rounded bg-gray-700">Abajo (Normal)</button>
-                    <button id="pos-hotbar-top" class="mc-button py-2 text-xs rounded">Arriba (HUD)</button>
-                </div>
-                <button id="btn-toggle-hotbar" class="mc-button py-2 text-xs rounded w-full bg-red-800/80">Ocultar / Mostrar Hotbar</button>
-            </div>
-            <div class="pt-2">
-                <button id="btn-close-config" class="mc-button py-2.5 rounded w-full text-sm">Guardar y Cerrar</button>
-            </div>
+    <!-- Visualizador 3D y Paneles -->
+    <main class="relative flex-1 w-full overflow-hidden bg-slate-950">
+
+        <!-- Canvas 3D de Three.js -->
+        <div id="canvas-container" class="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"></div>
+
+        <!-- Tooltip Hover 3D -->
+        <div id="tooltip" class="pointer-events-none fixed hidden z-30 glass-panel p-3 rounded-xl shadow-2xl text-xs space-y-1 transition-opacity duration-150 border border-indigo-500/30">
+            <div id="tooltip-title" class="font-bold text-indigo-300 border-b border-slate-700/50 pb-1 mb-1">Cargando...</div>
+            <div class="text-slate-300 flex justify-between space-x-4"><span class="text-slate-400">Valor:</span> <span id="tooltip-value" class="font-mono text-emerald-400 font-bold">0</span></div>
+            <div class="text-slate-300 flex justify-between space-x-4"><span class="text-slate-400">Fila:</span> <span id="tooltip-row" class="font-mono text-slate-200">#0</span></div>
+            <div id="tooltip-extra" class="text-slate-400 text-[11px] pt-1"></div>
         </div>
-    </div>
 
-    <!-- Pause Menu Overlay -->
-    <div id="pause-menu" class="absolute inset-0 bg-black/75 z-30 flex items-center justify-center pointer-events-auto hidden backdrop-blur-md">
-        <div class="bg-gray-900 border-2 border-gray-700 p-6 rounded-xl max-w-md w-full text-center text-white shadow-2xl">
-            <h1 class="text-2xl font-bold mb-1 text-green-400 tracking-wider">MINECRAFT BEDROCK</h1>
-            <p class="text-xs text-gray-400 mb-6">Versión Web HTML5 & Three.js</p>
-            <div class="flex flex-col gap-3 mb-6">
-                <button id="btn-resume" class="mc-button py-3 text-sm rounded cursor-pointer w-full">Reanudar Juego</button>
-                <button id="btn-toggle-sound" class="mc-button py-3 text-sm rounded cursor-pointer w-full flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-volume-high" id="sound-icon"></i>
-                    <span id="sound-text">Sonido: ACTIVADO</span>
+        <!-- Panel Flotante Izquierdo - Carga de Archivos & Configuración -->
+        <div class="absolute top-4 left-4 z-10 w-80 space-y-4">
+            
+            <!-- Tarjeta de Dropzone -->
+            <div class="glass-panel p-4 rounded-2xl space-y-3">
+                <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+                    <span><i class="fa-solid fa-file-excel text-emerald-400 mr-2"></i>Cargar Excel / CSV</span>
+                    <span id="fileBadge" class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-500/30">Demo Activa</span>
+                </h2>
+
+                <div id="dropzone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500/80 bg-slate-900/50 hover:bg-slate-900/90 rounded-xl p-4 text-center cursor-pointer transition-all">
+                    <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" class="hidden">
+                    <i class="fa-solid fa-cloud-arrow-up text-2xl text-indigo-400 mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Arrastra tu Excel aquí</p>
+                    <p class="text-[10px] text-slate-500 mt-0.5">Soporta .xlsx, .xls, .csv</p>
+                </div>
+            </div>
+
+            <!-- Ajustes 3D -->
+            <div class="glass-panel p-4 rounded-2xl space-y-3">
+                <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    <i class="fa-solid fa-sliders text-indigo-400 mr-2"></i>Ajustes del Gráfico 3D
+                </h2>
+
+                <!-- Rotación Automática -->
+                <div class="flex items-center justify-between text-xs py-1">
+                    <span class="text-slate-300">Rotación Automática</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="autoRotateCheck" class="sr-only peer" checked>
+                        <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+                    </label>
+                </div>
+
+                <!-- Esquema de Color -->
+                <div class="space-y-1">
+                    <label class="text-[11px] text-slate-400">Paleta de Color</label>
+                    <select id="colorSchemeSelect" class="w-full bg-slate-900 border border-slate-700/80 rounded-lg text-xs text-slate-300 p-2 focus:ring-1 focus:ring-indigo-500">
+                        <option value="indigo">Cian / Índigo Neon</option>
+                        <option value="emerald">Verde Esmeralda</option>
+                        <option value="sunset">Atardecer (Naranja/Rosa)</option>
+                        <option value="rainbow">Gradiente por Valor</option>
+                    </select>
+                </div>
+
+                <!-- Escala de Altura 3D -->
+                <div class="space-y-1">
+                    <div class="flex justify-between text-[11px] text-slate-400">
+                        <span>Escala Eje Y</span>
+                        <span id="heightScaleVal" class="font-mono">1.0x</span>
+                    </div>
+                    <input type="range" id="heightScale" min="0.2" max="3" step="0.1" value="1" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                </div>
+            </div>
+
+            <!-- Estadísticas Básicas -->
+            <div id="statsPanel" class="glass-panel p-4 rounded-2xl space-y-2 text-xs">
+                <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Métricas Rápidas</h3>
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                    <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
+                        <div class="text-[10px] text-slate-500">Total Filas</div>
+                        <div id="statTotalRows" class="text-sm font-bold font-mono text-indigo-300">0</div>
+                    </div>
+                    <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
+                        <div class="text-[10px] text-slate-500">Promedio</div>
+                        <div id="statAvg" class="text-sm font-bold font-mono text-emerald-400">0</div>
+                    </div>
+                    <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
+                        <div class="text-[10px] text-slate-500">Valor Máx</div>
+                        <div id="statMax" class="text-sm font-bold font-mono text-pink-400">0</div>
+                    </div>
+                    <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
+                        <div class="text-[10px] text-slate-500">Valor Mín</div>
+                        <div id="statMin" class="text-sm font-bold font-mono text-cyan-400">0</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Panel Desplazable de Tabla 2D (Derecha / Abajo) -->
+        <div id="tablePanel" class="absolute right-4 top-4 bottom-4 w-96 glass-panel rounded-2xl flex flex-col hidden transition-all duration-300 z-10 overflow-hidden shadow-2xl border border-slate-700/60">
+            <div class="p-3 bg-slate-900/90 border-b border-slate-800 flex justify-between items-center shrink-0">
+                <span class="text-xs font-semibold text-slate-200"><i class="fa-solid fa-table-cells mr-2 text-indigo-400"></i>Previsualización Excel</span>
+                <button id="closeTableBtn" class="text-slate-400 hover:text-slate-100 text-xs p-1">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
-                <button id="btn-regen" class="mc-button py-3 text-sm rounded cursor-pointer w-full">Regenerar Mundo</button>
+            </div>
+            <div class="flex-1 overflow-auto p-2">
+                <table id="dataTable" class="w-full text-left text-[11px] text-slate-300">
+                    <thead id="tableHeader" class="sticky top-0 bg-slate-900 text-indigo-300 font-semibold border-b border-slate-700">
+                        <!-- Cabecera dinámica -->
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-800/60">
+                        <!-- Filas dinámicas -->
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
 
-    <!-- Start Overlay -->
-    <div id="start-screen" class="absolute inset-0 bg-black/90 z-40 flex items-center justify-center pointer-events-auto">
-        <div class="text-center text-white p-8 max-w-md">
-            <div class="text-4xl font-extrabold mb-2 text-green-500 tracking-widest drop-shadow-lg">BEDROCK EDITION</div>
-            <p class="text-gray-300 text-sm mb-8">Haz clic o toca el botón para iniciar la simulación 3D.</p>
-            <button id="btn-start" class="mc-button px-8 py-4 text-lg rounded-lg cursor-pointer animate-pulse pointer-events-auto">¡JUGAR AHORA!</button>
-        </div>
-    </div>
+    </main>
 
-    <!-- Application Script -->
+    <!-- Script Principal JavaScript -->
     <script>
-        const BLOCK_SIZE = 1;
-        const WORLD_SIZE = 32;
-
-        const BLOCK_TYPES = {
-            GRASS: { id: 1, name: 'Pasto', color: 0x557a2b, topColor: 0x7cbd38, sideColor: 0x557a2b, transparent: false },
-            DIRT: { id: 2, name: 'Tierra', color: 0x866043, transparent: false },
-            STONE: { id: 3, name: 'Piedra', color: 0x808080, transparent: false },
-            WOOD: { id: 4, name: 'Madera', color: 0x674d32, transparent: false },
-            LEAVES: { id: 5, name: 'Hojas', color: 0x2e6f40, transparent: true, opacity: 0.85 },
-            BRICK: { id: 6, name: 'Ladrillo', color: 0x9b4a38, transparent: false },
-            SAND: { id: 7, name: 'Arena', color: 0xded298, transparent: false },
-            GLASS: { id: 8, name: 'Cristal', color: 0xaedeff, transparent: true, opacity: 0.4 }
-        };
-
-        const HOTBAR_ITEMS = [
-            BLOCK_TYPES.GRASS, BLOCK_TYPES.DIRT, BLOCK_TYPES.STONE,
-            BLOCK_TYPES.WOOD, BLOCK_TYPES.LEAVES, BLOCK_TYPES.BRICK,
-            BLOCK_TYPES.SAND, BLOCK_TYPES.GLASS
+        // ==========================================
+        // 1. DATOS DE SIMULACIÓN PRECARGADOS (DEFAULT)
+        // ==========================================
+        const DEFAULT_EXCEL_DATA = [
+            { Producto: "Laptops Pro", Region: "Norte", Ventas: 8500, Unidades: 120, Satisfaccion: 92 },
+            { Producto: "Smartphones X", Region: "Sur", Ventas: 6200, Unidades: 240, Satisfaccion: 88 },
+            { Producto: "Monitores 4K", Region: "Este", Ventas: 4100, Unidades: 95, Satisfaccion: 95 },
+            { Producto: "Teclados Mecánicos", Region: "Oeste", Ventas: 2300, Unidades: 310, Satisfaccion: 85 },
+            { Producto: "Audífonos BT", Region: "Norte", Ventas: 5400, Unidades: 450, Satisfaccion: 90 },
+            { Producto: "Servidores Cloud", Region: "Sur", Ventas: 9800, Unidades: 35, Satisfaccion: 97 },
+            { Producto: "Tablets HD", Region: "Este", Ventas: 3700, Unidades: 180, Satisfaccion: 82 },
+            { Producto: "Impresoras 3D", Region: "Oeste", Ventas: 7100, Unidades: 60, Satisfaccion: 89 },
+            { Producto: "Sillas Ergonomicas", Region: "Norte", Ventas: 4900, Unidades: 140, Satisfaccion: 94 },
+            { Producto: "Cámaras Web 4K", Region: "Sur", Ventas: 3100, Unidades: 290, Satisfaccion: 86 },
+            { Producto: "Micrófonos Studio", Region: "Este", Ventas: 2800, Unidades: 210, Satisfaccion: 91 },
+            { Producto: "Discos SSD 2TB", Region: "Oeste", Ventas: 6600, Unidades: 520, Satisfaccion: 96 }
         ];
 
-        let scene, camera, renderer;
-        let ambientLight, directionalLight, sunMesh;
-        let worldBlocks = {};
-        let selectedBlockIndex = 0;
-        let soundEnabled = true;
-        let isPaused = true;
-        let isTouchDevice = false;
+        // Estado Global de la Aplicación
+        let activeData = [...DEFAULT_EXCEL_DATA];
+        let numericColumns = [];
+        let selectedValueColumn = "";
+        let barMeshes = [];
+        let scene, camera, renderer, controls;
+        let raycaster, mouse;
+        let hoveredObject = null;
 
-        let gameTime = 0.37;
-        let timeMultiplier = 1.0;
-        let currentWeather = 'clear';
-        let rainParticles, rainGeo, rainMat;
-        let lightningTimer = 0;
+        // Dom Elements
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const columnSelect = document.getElementById('columnSelect');
+        const toggleTableBtn = document.getElementById('toggleTableBtn');
+        const tablePanel = document.getElementById('tablePanel');
+        const closeTableBtn = document.getElementById('closeTableBtn');
+        const tableBtnText = document.getElementById('tableBtnText');
+        const autoRotateCheck = document.getElementById('autoRotateCheck');
+        const colorSchemeSelect = document.getElementById('colorSchemeSelect');
+        const heightScaleInput = document.getElementById('heightScale');
+        const heightScaleVal = document.getElementById('heightScaleVal');
+        const tooltip = document.getElementById('tooltip');
+        const fileBadge = document.getElementById('fileBadge');
 
-        // Entidades (Animales)
-        let animals = [];
-
-        const player = {
-            position: new THREE.Vector3(WORLD_SIZE / 2, 12, WORLD_SIZE / 2),
-            velocity: new THREE.Vector3(),
-            height: 1.7,
-            radius: 0.3,
-            onGround: false,
-            speed: 6.0,
-            jumpForce: 7.5,
-            gravity: 20.0
-        };
-
-        const keys = { KeyW: false, KeyS: false, KeyA: false, KeyD: false, Space: false };
-        let cameraRotation = { pitch: 0, yaw: 0 };
-        const raycaster = new THREE.Raycaster();
-        const centerPointer = new THREE.Vector2(0, 0);
-
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playSound(type) {
-            if (!soundEnabled || !audioCtx) return;
-            try {
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                const now = audioCtx.currentTime;
-                if (type === 'break') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(150, now);
-                    osc.frequency.exponentialRampToValueAtTime(40, now + 0.1);
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                    osc.start(now);
-                    osc.stop(now + 0.1);
-                } else if (type === 'place') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(200, now);
-                    osc.frequency.exponentialRampToValueAtTime(400, now + 0.08);
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-                    osc.start(now);
-                    osc.stop(now + 0.08);
-                } else if (type === 'thunder') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(80, now);
-                    osc.frequency.linearRampToValueAtTime(20, now + 0.8);
-                    gain.gain.setValueAtTime(0.7, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
-                    osc.start(now);
-                    osc.stop(now + 0.8);
-                }
-            } catch (e) {}
-        }
-
-        window.onload = function () {
-            checkTouchSupport();
-            initThreeJS();
-            generateWorld();
-            spawnAnimals();
-            setupUI();
-            setupEvents();
-            animate();
-        };
-
-        function checkTouchSupport() {
-            isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-        }
-
-        function initThreeJS() {
+        // ==========================================
+        // 2. INICIALIZACIÓN DE THREE.JS (ESCENA 3D)
+        // ==========================================
+        function init3D() {
             const container = document.getElementById('canvas-container');
+            
+            // Escena
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x87ceeb);
-            scene.fog = new THREE.FogExp2(0x87ceeb, 0.015);
+            scene.background = new THREE.Color(0x030712); // Dark slate tone
+            scene.fog = new THREE.FogExp2(0x030712, 0.015);
 
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.copy(player.position);
+            // Cámara
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(25, 20, 30);
 
+            // Renderer
             renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
 
-            ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+            // OrbitControls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxPolarAngle = Math.PI / 2 - 0.02; // No bajar del piso
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 1.2;
+
+            // Luces
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
             scene.add(ambientLight);
 
-            directionalLight = new THREE.DirectionalLight(0xffffff, 1.3);
-            directionalLight.position.set(50, 100, 50);
-            directionalLight.castShadow = true;
-            scene.add(directionalLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(20, 40, 20);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 2048;
+            dirLight.shadow.mapSize.height = 2048;
+            scene.add(dirLight);
 
-            const sunGeo = new THREE.SphereGeometry(4, 16, 16);
-            const sunMat = new THREE.MeshBasicMaterial({ color: 0xfffaaa });
-            sunMesh = new THREE.Mesh(sunGeo, sunMat);
-            scene.add(sunMesh);
+            const pointLight = new THREE.PointLight(0x6366f1, 1.5, 50);
+            pointLight.position.set(0, 15, 0);
+            scene.add(pointLight);
 
-            const rainCount = 600;
-            rainGeo = new THREE.BufferGeometry();
-            const positions = new Float32Array(rainCount * 3);
-            for (let i = 0; i < rainCount * 3; i += 3) {
-                positions[i] = (Math.random() - 0.5) * 40;
-                positions[i + 1] = Math.random() * 20;
-                positions[i + 2] = (Math.random() - 0.5) * 40;
-            }
-            rainGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            rainMat = new THREE.PointsMaterial({ color: 0xaaaaaa, size: 0.2, transparent: true, opacity: 0.6 });
-            rainParticles = new THREE.Points(rainGeo, rainMat);
-            rainParticles.visible = false;
-            scene.add(rainParticles);
+            // Grilla de piso tecnológica
+            const gridHelper = new THREE.GridHelper(60, 30, 0x6366f1, 0x1e293b);
+            gridHelper.position.y = 0;
+            scene.add(gridHelper);
+
+            // Plano base receptor de sombras
+            const shadowPlaneGeo = new THREE.PlaneGeometry(100, 100);
+            const shadowPlaneMat = new THREE.ShadowMaterial({ opacity: 0.3 });
+            const shadowPlane = new THREE.Mesh(shadowPlaneGeo, shadowPlaneMat);
+            shadowPlane.rotation.x = -Math.PI / 2;
+            shadowPlane.receiveShadow = true;
+            scene.add(shadowPlane);
+
+            // Raycaster para interacciones
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            // Event Listeners para resize y mouse move
+            window.addEventListener('resize', onWindowResize);
+            container.addEventListener('mousemove', onMouseMove);
+
+            // Loop de Animación
+            animate();
         }
 
-        const geometries = { cube: new THREE.BoxGeometry(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE) };
-        const blockMaterials = {};
-
-        function getBlockMaterial(blockType) {
-            if (blockMaterials[blockType.id]) return blockMaterials[blockType.id];
-            let mat;
-            if (blockType.id === BLOCK_TYPES.GRASS.id) {
-                const topMat = new THREE.MeshLambertMaterial({ color: BLOCK_TYPES.GRASS.topColor });
-                const sideMat = new THREE.MeshLambertMaterial({ color: BLOCK_TYPES.GRASS.sideColor });
-                const bottomMat = new THREE.MeshLambertMaterial({ color: BLOCK_TYPES.DIRT.color });
-                mat = [sideMat, sideMat, topMat, bottomMat, sideMat, sideMat];
-            } else {
-                mat = new THREE.MeshLambertMaterial({
-                    color: blockType.color,
-                    transparent: blockType.transparent || false,
-                    opacity: blockType.opacity || 1.0
-                });
-            }
-            blockMaterials[blockType.id] = mat;
-            return mat;
-        }
-
-        function generateWorld() {
-            Object.keys(worldBlocks).forEach(key => scene.remove(worldBlocks[key]));
-            worldBlocks = {};
-
-            for (let x = 0; x < WORLD_SIZE; x++) {
-                for (let z = 0; z < WORLD_SIZE; z++) {
-                    const nx = x / 10, nz = z / 10;
-                    const h = Math.floor(Math.sin(nx) * Math.cos(nz) * 3 + Math.sin(nx * 2) * 2 + 6);
-                    for (let y = 0; y <= h; y++) {
-                        let type = BLOCK_TYPES.STONE;
-                        if (y === h) type = BLOCK_TYPES.GRASS;
-                        else if (y > h - 3) type = BLOCK_TYPES.DIRT;
-                        createBlock(x, y, z, type);
-                    }
-                    if (x > 2 && x < WORLD_SIZE - 2 && z > 2 && z < WORLD_SIZE - 2) {
-                        if (Math.random() < 0.015 && h >= 5) generateTree(x, h + 1, z);
-                    }
-                }
-            }
-        }
-
-        function generateTree(x, y, z) {
-            const height = 4 + Math.floor(Math.random() * 2);
-            for (let i = 0; i < height; i++) createBlock(x, y + i, z, BLOCK_TYPES.WOOD);
-            const leafStart = y + height - 2;
-            for (let lx = x - 2; lx <= x + 2; lx++) {
-                for (let lz = z - 2; lz <= z + 2; lz++) {
-                    for (let ly = leafStart; ly <= y + height + 1; ly++) {
-                        if (Math.abs(lx - x) === 2 && Math.abs(lz - z) === 2) continue;
-                        if (ly === y + height + 1 && (Math.abs(lx - x) > 0 || Math.abs(lz - z) > 0)) continue;
-                        const key = `${lx},${ly},${lz}`;
-                        if (!worldBlocks[key]) createBlock(lx, ly, lz, BLOCK_TYPES.LEAVES);
-                    }
-                }
-            }
-        }
-
-        // Obtener la altura real del suelo (pasto/tierra) en X, Z
-        function getSurfaceHeight(x, z) {
-            const bx = Math.floor(x);
-            const bz = Math.floor(z);
-            for (let y = 20; y >= 0; y--) {
-                if (worldBlocks[`${bx},${y},${bz}`]) {
-                    return y + 1; // Posición justo encima del bloque
-                }
-            }
-            return 6; // Altura por defecto si no encuentra
-        }
-
-        // Spawneo de animales sobre la superficie real
-        function spawnAnimals() {
-            animals.forEach(a => scene.remove(a.mesh));
-            animals = [];
-
-            const types = ['dog', 'cat', 'bird', 'fish'];
-            for (let i = 0; i < 12; i++) {
-                const type = types[Math.floor(Math.random() * types.length)];
-                const group = new THREE.Group();
-                let color = 0x8b5a2b;
-
-                if (type === 'dog') {
-                    color = 0xd2b48c;
-                    const body = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.4, 0.9), new THREE.MeshLambertMaterial({color}));
-                    body.position.y = 0.2;
-                    const head = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.4), new THREE.MeshLambertMaterial({color}));
-                    head.position.set(0, 0.5, 0.4);
-                    group.add(body, head);
-                } else if (type === 'cat') {
-                    color = 0xffa500;
-                    const body = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.3, 0.7), new THREE.MeshLambertMaterial({color}));
-                    body.position.y = 0.15;
-                    const head = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.3, 0.3), new THREE.MeshLambertMaterial({color}));
-                    head.position.set(0, 0.4, 0.3);
-                    group.add(body, head);
-                } else if (type === 'bird') {
-                    color = 0x00bfff;
-                    const body = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.3, 0.4), new THREE.MeshLambertMaterial({color}));
-                    group.add(body);
-                } else if (type === 'fish') {
-                    color = 0xff4500;
-                    const body = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.2, 0.2), new THREE.MeshLambertMaterial({color}));
-                    group.add(body);
-                }
-
-                const px = 5 + Math.random() * (WORLD_SIZE - 10);
-                const pz = 5 + Math.random() * (WORLD_SIZE - 10);
-                let py = getSurfaceHeight(px, pz);
-
-                if (type === 'bird') py += 6 + Math.random() * 4; // Aves vuelan alto
-                if (type === 'fish') py = Math.max(2, py - 2); // Peces en el agua/suelo bajo
-
-                group.position.set(px, py, pz);
-                scene.add(group);
-                animals.push({ mesh: group, type: type, speed: 0.8 + Math.random() * 1.0, angle: Math.random() * Math.PI * 2 });
-            }
-        }
-
-        // Actualizar movimiento de animales asegurando que caminen por el suelo
-        function updateAnimals(delta) {
-            animals.forEach(anim => {
-                anim.angle += (Math.random() - 0.5) * 0.4;
-                const speed = anim.speed * delta;
-                
-                anim.mesh.position.x += Math.cos(anim.angle) * speed;
-                anim.mesh.position.z += Math.sin(anim.angle) * speed;
-                anim.mesh.rotation.y = -anim.angle;
-
-                // Mantener límites dentro del mundo
-                anim.mesh.position.x = Math.max(2, Math.min(WORLD_SIZE - 2, anim.mesh.position.x));
-                anim.mesh.position.z = Math.max(2, Math.min(WORLD_SIZE - 2, anim.mesh.position.z));
-
-                // Ajustar altura según el terreno
-                if (anim.type === 'bird') {
-                    anim.mesh.position.y = getSurfaceHeight(anim.mesh.position.x, anim.mesh.position.z) + 6;
-                } else if (anim.type === 'fish') {
-                    anim.mesh.position.y = Math.max(2, getSurfaceHeight(anim.mesh.position.x, anim.mesh.position.z) - 1);
-                } else {
-                    // Perros y gatos caminan directamente sobre el bloque del suelo
-                    anim.mesh.position.y = getSurfaceHeight(anim.mesh.position.x, anim.mesh.position.z);
-                }
-            });
-        }
-
-        function createBlock(x, y, z, blockType) {
-            const key = `${x},${y},${z}`;
-            if (worldBlocks[key]) return;
-            const mesh = new THREE.Mesh(geometries.cube, getBlockMaterial(blockType));
-            mesh.position.set(x + 0.5, y + 0.5, z + 0.5);
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-            mesh.userData = { key, blockType, x, y, z };
-            scene.add(mesh);
-            worldBlocks[key] = mesh;
-        }
-
-        function removeBlock(key) {
-            if (worldBlocks[key]) {
-                scene.remove(worldBlocks[key]);
-                delete worldBlocks[key];
-                playSound('break');
-            }
-        }
-
-        function handleInteraction(isPlacing) {
-            if (isPaused) return;
-            raycaster.setFromCamera(centerPointer, camera);
-            const intersects = raycaster.intersectObjects(Object.values(worldBlocks));
-            if (intersects.length > 0) {
-                const hit = intersects[0];
-                if (hit.distance > 8) return;
-                if (isPlacing) {
-                    const normal = hit.face.normal;
-                    const targetPos = hit.object.position.clone().add(normal);
-                    const x = Math.floor(targetPos.x), y = Math.floor(targetPos.y), z = Math.floor(targetPos.z);
-                    createBlock(x, y, z, HOTBAR_ITEMS[selectedBlockIndex]);
-                    playSound('place');
-                } else {
-                    removeBlock(hit.object.userData.key);
-                }
-            }
-        }
-
-        function setupUI() {
-            const hotbarContainer = document.getElementById('hotbar');
-            hotbarContainer.innerHTML = '';
-            HOTBAR_ITEMS.forEach((item, index) => {
-                const slot = document.createElement('div');
-                slot.className = `hotbar-slot rounded ${index === selectedBlockIndex ? 'active' : ''}`;
-                const colorHex = '#' + item.color.toString(16).padStart(6, '0');
-                slot.innerHTML = `<span class="slot-number">${index + 1}</span><div class="w-7 h-7 m-auto mt-2 rounded border border-black/40 shadow-inner" style="background-color: ${colorHex}"></div>`;
-                slot.onclick = () => { selectedBlockIndex = index; updateHotbarUI(); };
-                hotbarContainer.appendChild(slot);
-            });
-        }
-
-        function updateHotbarUI() {
-            document.querySelectorAll('.hotbar-slot').forEach((slot, idx) => {
-                if (idx === selectedBlockIndex) slot.classList.add('active');
-                else slot.classList.remove('active');
-            });
-        }
-
-        function setupEvents() {
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-            window.addEventListener('keydown', (e) => {
-                if (e.code in keys) keys[e.code] = true;
-                if (e.code >= 'Digit1' && e.code <= 'Digit8') {
-                    selectedBlockIndex = parseInt(e.code.replace('Digit', '')) - 1;
-                    updateHotbarUI();
-                }
-                if (e.code === 'Escape') togglePause();
-            });
-
-            window.addEventListener('keyup', (e) => { if (e.code in keys) keys[e.code] = false; });
-
-            window.addEventListener('wheel', (e) => {
-                selectedBlockIndex = e.deltaY > 0 ? (selectedBlockIndex + 1) % HOTBAR_ITEMS.length : (selectedBlockIndex - 1 + HOTBAR_ITEMS.length) % HOTBAR_ITEMS.length;
-                updateHotbarUI();
-            });
-
-            const startBtn = document.getElementById('btn-start');
-            const startScreen = document.getElementById('start-screen');
-
-            function startGame(e) {
-                if (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                startScreen.style.display = 'none';
-                startScreen.style.pointerEvents = 'none';
-                isPaused = false;
-                if (!isTouchDevice) {
-                    try { document.body.requestPointerLock(); } catch(err) {}
-                }
-            }
-
-            startBtn.addEventListener('click', startGame);
-            startBtn.addEventListener('touchend', startGame);
-
-            document.addEventListener('mousemove', (e) => {
-                if (document.pointerLockElement === document.body || isTouchDevice) {
-                    cameraRotation.yaw -= e.movementX * 0.002;
-                    cameraRotation.pitch = Math.max(-Math.PI / 2 + 0.01, Math.min(Math.PI / 2 - 0.01, cameraRotation.pitch - e.movementY * 0.002));
-                }
-            });
-
-            window.addEventListener('mousedown', (e) => {
-                if (!isPaused && (document.pointerLockElement === document.body || isTouchDevice)) {
-                    if (e.button === 0) handleInteraction(false);
-                    if (e.button === 2) handleInteraction(true);
-                }
-            });
-            window.addEventListener('contextmenu', e => e.preventDefault());
-
-            setupTouchControls();
-
-            document.getElementById('btn-pause').onclick = togglePause;
-            document.getElementById('btn-resume').onclick = togglePause;
-            document.getElementById('btn-toggle-sound').onclick = () => {
-                soundEnabled = !soundEnabled;
-                document.getElementById('sound-text').innerText = `Sonido: ${soundEnabled ? 'ACTIVADO' : 'DESACTIVADO'}`;
-            };
-            document.getElementById('btn-regen').onclick = () => { generateWorld(); spawnAnimals(); togglePause(); };
-            
-            document.getElementById('btn-config-touch').onclick = () => {
-                document.getElementById('config-modal').classList.remove('hidden');
-                isPaused = true;
-            };
-            document.getElementById('btn-close-config').onclick = () => {
-                document.getElementById('config-modal').classList.add('hidden');
-                isPaused = false;
-            };
-
-            document.getElementById('btn-weather-time').onclick = () => {
-                document.getElementById('weather-time-modal').classList.remove('hidden');
-                isPaused = true;
-            };
-            document.getElementById('btn-close-wt').onclick = () => {
-                timeMultiplier = parseFloat(document.getElementById('select-timespeed').value);
-                document.getElementById('weather-time-modal').classList.add('hidden');
-                isPaused = false;
-            };
-        }
-
-        window.setTimePreset = function(val) {
-            gameTime = val;
-        };
-
-        window.setWeather = function(type) {
-            currentWeather = type;
-            const weatherLabels = { clear: 'Despejado', rain: 'Lluvia', storm: 'Tormenta Eléctrica' };
-            document.getElementById('weather-counter').innerText = `Clima: ${weatherLabels[type]}`;
-            rainParticles.visible = (type !== 'clear');
-        };
-
-        function togglePause() {
-            isPaused = !isPaused;
-            const menu = document.getElementById('pause-menu');
-            if (isPaused) {
-                menu.classList.remove('hidden');
-            } else {
-                menu.classList.add('hidden');
-            }
-        }
-
-        document.getElementById('range-scale').addEventListener('input', (e) => {
-            const val = e.target.value;
-            document.getElementById('joystick-zone').style.transform = `scale(${val})`;
-            document.getElementById('action-buttons-container').style.transform = `scale(${val})`;
-            document.getElementById('hotbar-wrapper').style.transform = `scale(${val})`;
-        });
-        document.getElementById('range-opacity').addEventListener('input', (e) => {
-            const val = e.target.value;
-            document.getElementById('joystick-zone').style.opacity = val;
-            document.getElementById('action-buttons-container').style.opacity = val;
-            document.getElementById('hotbar-wrapper').style.opacity = val;
-        });
-        document.getElementById('pos-joystick-bottom').onclick = () => {
-            document.getElementById('joystick-zone').style.bottom = '12px';
-        };
-        document.getElementById('pos-joystick-mid').onclick = () => {
-            document.getElementById('joystick-zone').style.bottom = '35%';
-        };
-
-        document.getElementById('pos-hotbar-bottom').onclick = () => {
-            const hud = document.getElementById('hud');
-            hud.style.justifyContent = 'space-between';
-        };
-        document.getElementById('pos-hotbar-top').onclick = () => {
-            const hud = document.getElementById('hud');
-            hud.style.justifyContent = 'flex-start';
-        };
-
-        let hotbarVisible = true;
-        document.getElementById('btn-toggle-hotbar').onclick = () => {
-            hotbarVisible = !hotbarVisible;
-            const hotbarEl = document.getElementById('hotbar-wrapper');
-            hotbarEl.style.display = hotbarVisible ? 'flex' : 'none';
-        };
-
-        let touchLookId = null;
-        let lastTouchX = 0, lastTouchY = 0;
-
-        function setupTouchControls() {
-            const joystickZone = document.getElementById('joystick-zone');
-            const joystickKnob = document.getElementById('joystick-knob');
-            let joystickTouchId = null;
-            let center = { x: 0, y: 0 };
-
-            joystickZone.addEventListener('touchstart', (e) => {
-                const touch = e.changedTouches[0];
-                joystickTouchId = touch.identifier;
-                const rect = joystickZone.getBoundingClientRect();
-                center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-            }, { passive: true });
-
-            window.addEventListener('touchmove', (e) => {
-                if (isPaused) return;
-                for (let i = 0; i < e.touches.length; i++) {
-                    const touch = e.touches[i];
-                    if (touch.identifier === joystickTouchId) {
-                        const dx = touch.clientX - center.x;
-                        const dy = touch.clientY - center.y;
-                        const dist = Math.min(Math.hypot(dx, dy), 50);
-                        const angle = Math.atan2(dy, dx);
-                        joystickKnob.style.transform = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`;
-
-                        keys.KeyW = dy < -15;
-                        keys.KeyS = dy > 15;
-                        keys.KeyA = dx < -15;
-                        keys.KeyD = dx > 15;
-                    } else if (touch.identifier === touchLookId) {
-                        const deltaX = touch.clientX - lastTouchX;
-                        const deltaY = touch.clientY - lastTouchY;
-                        lastTouchX = touch.clientX;
-                        lastTouchY = touch.clientY;
-                        cameraRotation.yaw -= deltaX * 0.005;
-                        cameraRotation.pitch = Math.max(-Math.PI / 2 + 0.01, Math.min(Math.PI / 2 - 0.01, cameraRotation.pitch - deltaY * 0.005));
-                    }
-                }
-            }, { passive: true });
-
-            window.addEventListener('touchend', (e) => {
-                for (let i = 0; i < e.changedTouches.length; i++) {
-                    const touch = e.changedTouches[i];
-                    if (touch.identifier === joystickTouchId) {
-                        joystickTouchId = null;
-                        joystickKnob.style.transform = 'translate(0px, 0px)';
-                        keys.KeyW = keys.KeyS = keys.KeyA = keys.KeyD = false;
-                    }
-                    if (touch.identifier === touchLookId) touchLookId = null;
-                }
-            }, { passive: true });
-
-            window.addEventListener('touchstart', (e) => {
-                if (isPaused) return;
-                for (let i = 0; i < e.changedTouches.length; i++) {
-                    const touch = e.changedTouches[i];
-                    if (touch.clientX > window.innerWidth / 2 && touchLookId === null) {
-                        touchLookId = touch.identifier;
-                        lastTouchX = touch.clientX;
-                        lastTouchY = touch.clientY;
-                    }
-                }
-            }, { passive: true });
-
-            document.getElementById('btn-jump').addEventListener('touchstart', (e) => { e.preventDefault(); keys.Space = true; }, { passive: false });
-            document.getElementById('btn-jump').addEventListener('touchend', (e) => { e.preventDefault(); keys.Space = false; }, { passive: false });
-            
-            document.getElementById('btn-break').addEventListener('click', (e) => { e.preventDefault(); handleInteraction(false); });
-            document.getElementById('btn-break').addEventListener('touchend', (e) => { e.preventDefault(); handleInteraction(false); });
-            
-            document.getElementById('btn-place').addEventListener('click', (e) => { e.preventDefault(); handleInteraction(true); });
-            document.getElementById('btn-place').addEventListener('touchend', (e) => { e.preventDefault(); handleInteraction(true); });
-        }
-
-        function updatePhysics(delta) {
-            if (isPaused) return;
-            player.velocity.y -= player.gravity * delta;
-
-            const moveVector = new THREE.Vector3();
-            if (keys.KeyW) moveVector.z -= 1;
-            if (keys.KeyS) moveVector.z += 1;
-            if (keys.KeyA) moveVector.x -= 1;
-            if (keys.KeyD) moveVector.x += 1;
-            moveVector.normalize();
-            moveVector.applyAxisAngle(new THREE.Vector3(0, 1, 0), cameraRotation.yaw);
-
-            if (keys.Space && player.onGround) {
-                player.velocity.y = player.jumpForce;
-                player.onGround = false;
-            }
-
-            const nextX = player.position.x + moveVector.x * player.speed * delta;
-            if (!checkCollision(nextX, player.position.y, player.position.z)) player.position.x = nextX;
-
-            const nextZ = player.position.z + moveVector.z * player.speed * delta;
-            if (!checkCollision(player.position.x, player.position.y, nextZ)) player.position.z = nextZ;
-
-            const nextY = player.position.y + player.velocity.y * delta;
-            if (checkCollision(player.position.x, nextY, player.position.z)) {
-                if (player.velocity.y < 0) player.onGround = true;
-                player.velocity.y = 0;
-            } else {
-                player.position.y = nextY;
-                player.onGround = false;
-            }
-
-            if (player.position.y < -10) {
-                player.position.set(WORLD_SIZE / 2, 15, WORLD_SIZE / 2);
-                player.velocity.set(0, 0, 0);
-            }
-
-            const euler = new THREE.Euler(0, 0, 0, 'YXZ');
-            euler.x = cameraRotation.pitch;
-            euler.y = cameraRotation.yaw;
-            camera.quaternion.setFromEuler(euler);
-            camera.position.copy(player.position);
-        }
-
-        function checkCollision(x, y, z) {
-            const r = player.radius, h = player.height;
-            for (let dx = -r; dx <= r; dx += r * 2) {
-                for (let dz = -r; dz <= r; dz += r * 2) {
-                    for (let dy = 0; dy <= h; dy += h / 2) {
-                        const bx = Math.floor(x + dx), by = Math.floor(y - dy), bz = Math.floor(z + dz);
-                        if (worldBlocks[`${bx},${by},${bz}`]) return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        let lastTime = performance.now(), frameCount = 0, lastFpsUpdate = performance.now();
-        
         function animate() {
             requestAnimationFrame(animate);
-            const now = performance.now();
-            const delta = Math.min((now - lastTime) / 1000, 0.1);
-            lastTime = now;
-
-            frameCount++;
-            if (now - lastFpsUpdate >= 1000) {
-                document.getElementById('fps-counter').innerText = `FPS: ${frameCount}`;
-                frameCount = 0;
-                lastFpsUpdate = now;
-            }
-
-            updatePhysics(delta);
-            updateAnimals(delta);
-
-            if (!isPaused && timeMultiplier > 0) {
-                gameTime += (delta / 1200) * timeMultiplier;
-                if (gameTime > 1) gameTime = 0;
-
-                const angle = gameTime * Math.PI * 2;
-                const sunX = Math.cos(angle) * 100 + WORLD_SIZE / 2;
-                const sunY = Math.sin(angle) * 100;
-                const sunZ = WORLD_SIZE / 2;
-                directionalLight.position.set(sunX, sunY, sunZ);
-                sunMesh.position.set(sunX, sunY, sunZ);
-
-                const sunHeight = Math.sin(angle);
-                let skyColor = new THREE.Color();
-                let ambientIntensity = 0.75;
-                let sunIntensity = 1.3;
-
-                if (currentWeather === 'storm') {
-                    skyColor.setHex(0x383c44);
-                    ambientIntensity = 0.35;
-                    sunIntensity = 0.4;
-                } else if (currentWeather === 'rain') {
-                    skyColor.setHex(0x60758a);
-                    ambientIntensity = 0.5;
-                    sunIntensity = 0.7;
-                } else {
-                    if (sunHeight > 0) {
-                        skyColor.setHSL(0.55, 0.7, 0.6 + sunHeight * 0.3);
-                        ambientIntensity = 0.6 + sunHeight * 0.3;
-                        sunIntensity = 1.0 + sunHeight * 0.5;
-                    } else {
-                        skyColor.setHex(0x121c38);
-                        ambientIntensity = 0.25;
-                        sunIntensity = 0.1;
-                    }
-                }
-
-                scene.background = skyColor;
-                scene.fog.color = skyColor;
-                ambientLight.intensity = ambientIntensity;
-                directionalLight.intensity = sunIntensity;
-
-                if (rainParticles.visible) {
-                    const positions = rainGeo.attributes.position.array;
-                    for (let i = 1; i < positions.length; i += 3) {
-                        positions[i] -= delta * 15;
-                        if (positions[i] < 0) positions[i] = 20;
-                    }
-                    rainGeo.attributes.position.needsUpdate = true;
-                    rainParticles.position.copy(camera.position);
-
-                    if (currentWeather === 'storm') {
-                        lightningTimer += delta;
-                        if (lightningTimer > 7 + Math.random() * 8) {
-                            lightningTimer = 0;
-                            triggerLightning();
-                        }
-                    }
-                }
-
-                const totalMinutes = Math.floor(gameTime * 24 * 60);
-                const hours = Math.floor(totalMinutes / 60);
-                const minutes = totalMinutes % 60;
-                const period = hours >= 6 && hours < 19 ? 'Día' : 'Noche';
-                document.getElementById('time-counter').innerText = `Hora: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} (${period})`;
-            }
-
-            document.getElementById('pos-counter').innerText = `XYZ: ${Math.floor(player.position.x)}, ${Math.floor(player.position.y)}, ${Math.floor(player.position.z)}`;
+            controls.update();
             renderer.render(scene, camera);
         }
 
-        function triggerLightning() {
-            const overlay = document.getElementById('lightning-overlay');
-            overlay.classList.add('lightning-flash');
-            playSound('thunder');
-            setTimeout(() => {
-                overlay.classList.remove('lightning-flash');
-            }, 300);
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
         }
+
+        // ==========================================
+        // 3. GENERACIÓN DINÁMICA DE BARRAS 3D
+        // ==========================================
+        function update3DScene() {
+            // Limpiar barras previas de la escena
+            barMeshes.forEach(mesh => {
+                scene.remove(mesh);
+                if (mesh.geometry) mesh.geometry.dispose();
+                if (mesh.material) mesh.material.dispose();
+            });
+            barMeshes = [];
+
+            if (!activeData || activeData.length === 0 || !selectedValueColumn) return;
+
+            // Extraer valores numéricos para escalar
+            const rawValues = activeData.map(item => parseFloat(item[selectedValueColumn]) || 0);
+            const maxVal = Math.max(...rawValues, 1);
+            const minVal = Math.min(...rawValues, 0);
+            const userScale = parseFloat(heightScaleInput.value) || 1.0;
+
+            // Configurar matriz / rejilla de barras 3D
+            const totalItems = activeData.length;
+            const cols = Math.ceil(Math.sqrt(totalItems));
+            const spacing = 3.2;
+            const offsetX = (cols * spacing) / 2 - spacing / 2;
+            const offsetZ = (Math.ceil(totalItems / cols) * spacing) / 2 - spacing / 2;
+
+            activeData.forEach((row, index) => {
+                const val = parseFloat(row[selectedValueColumn]) || 0;
+                
+                // Normalización de altura (1 a 18 unidades)
+                const normalizedHeight = Math.max(((val / maxVal) * 16) * userScale, 0.4);
+
+                const geometry = new THREE.BoxGeometry(2, normalizedHeight, 2);
+                
+                // Asignar color según esquema
+                const color = getColorForValue(val, minVal, maxVal, index, totalItems);
+
+                const material = new THREE.MeshStandardMaterial({
+                    color: color,
+                    roughness: 0.2,
+                    metalness: 0.5,
+                    emissive: color,
+                    emissiveIntensity: 0.15
+                });
+
+                const bar = new THREE.Mesh(geometry, material);
+                
+                // Posicionar en cuadrícula
+                const r = Math.floor(index / cols);
+                const c = index % cols;
+                
+                bar.position.x = (c * spacing) - offsetX;
+                bar.position.y = normalizedHeight / 2; // Apoyar sobre el plano Y=0
+                bar.position.z = (r * spacing) - offsetZ;
+                
+                bar.castShadow = true;
+                bar.receiveShadow = true;
+
+                // Datos adjuntos en el objeto 3D para Tooltips
+                bar.userData = {
+                    dataRow: row,
+                    val: val,
+                    rowIndex: index + 1,
+                    originalColor: color
+                };
+
+                scene.add(bar);
+                barMeshes.push(bar);
+            });
+
+            // Actualizar Estadísticas Básicas
+            updateStats(rawValues);
+        }
+
+        // Esquemas de Colores dinámicos
+        function getColorForValue(val, min, max, index, total) {
+            const scheme = colorSchemeSelect.value;
+            const ratio = max === min ? 0.5 : (val - min) / (max - min);
+
+            if (scheme === 'emerald') {
+                return new THREE.Color().setHSL(0.4, 0.8, 0.3 + ratio * 0.4);
+            } else if (scheme === 'sunset') {
+                return new THREE.Color().setHSL(0.05 + ratio * 0.15, 0.9, 0.5);
+            } else if (scheme === 'rainbow') {
+                return new THREE.Color().setHSL(ratio * 0.7, 0.85, 0.5);
+            } else {
+                // Indigo / Cian Neon por defecto
+                return new THREE.Color().setHSL(0.6 + ratio * 0.15, 0.85, 0.55);
+            }
+        }
+
+        // ==========================================
+        // 4. LECTURA DE EXCEL / CSV CON SHEETJS
+        // ==========================================
+        function handleFileSelect(file) {
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    
+                    // Tomar la primera hoja del Excel
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    
+                    // Convertir hoja a JSON
+                    const parsedJson = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+                    if (parsedJson.length === 0) {
+                        alert("El archivo subido está vacío o no tiene formato válido.");
+                        return;
+                    }
+
+                    activeData = parsedJson;
+                    fileBadge.textContent = file.name;
+                    fileBadge.className = "text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30 truncate max-w-[120px]";
+
+                    processParsedData();
+                } catch (err) {
+                    console.error("Error al procesar Excel:", err);
+                    alert("Ocurrió un error al leer el archivo de Excel. Asegúrate de que sea un formato válido (.xlsx, .xls o .csv).");
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // Identificar columnas numéricas e inicializar
+        function processParsedData() {
+            if (!activeData || activeData.length === 0) return;
+
+            // Detectar cabeceras
+            const keys = Object.keys(activeData[0]);
+            
+            // Filtrar columnas numéricas
+            numericColumns = keys.filter(key => {
+                return activeData.some(row => !isNaN(parseFloat(row[key])) && isFinite(row[key]));
+            });
+
+            if (numericColumns.length === 0) {
+                numericColumns = keys; // Respaldo si no detecta tipos estrictos
+            }
+
+            // Llenar selector de columna activa
+            columnSelect.innerHTML = '';
+            numericColumns.forEach(col => {
+                const opt = document.createElement('option');
+                opt.value = col;
+                opt.textContent = col;
+                columnSelect.appendChild(opt);
+            });
+
+            selectedValueColumn = numericColumns[0] || keys[0];
+            columnSelect.value = selectedValueColumn;
+
+            // Renderizar vistas 3D y 2D
+            render2DTable();
+            update3DScene();
+        }
+
+        // Renderizar Vista previa de Tabla 2D
+        function render2DTable() {
+            const tableHeader = document.getElementById('tableHeader');
+            const tableBody = document.getElementById('tableBody');
+
+            tableHeader.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            if (!activeData || activeData.length === 0) return;
+
+            const cols = Object.keys(activeData[0]);
+
+            // Tr Header
+            const trHead = document.createElement('tr');
+            cols.forEach(col => {
+                const th = document.createElement('th');
+                th.className = "px-3 py-2 font-medium";
+                th.textContent = col;
+                trHead.appendChild(th);
+            });
+            tableHeader.appendChild(trHead);
+
+            // Tr Body (Primeros 50 registros máximo para rendimiento)
+            activeData.slice(0, 50).forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/50 transition-colors";
+                cols.forEach(col => {
+                    const td = document.createElement('td');
+                    td.className = "px-3 py-1.5 whitespace-nowrap text-[11px]";
+                    td.textContent = row[col] !== undefined ? row[col] : "";
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Actualización de Métricas Rápidas
+        function updateStats(values) {
+            if (!values || values.length === 0) return;
+            const sum = values.reduce((a, b) => a + b, 0);
+            const avg = sum / values.length;
+            const max = Math.max(...values);
+            const min = Math.min(...values);
+
+            document.getElementById('statTotalRows').textContent = values.length;
+            document.getElementById('statAvg').textContent = avg.toLocaleString(undefined, { maximumFractionDigits: 1 });
+            document.getElementById('statMax').textContent = max.toLocaleString();
+            document.getElementById('statMin').textContent = min.toLocaleString();
+        }
+
+        // ==========================================
+        // 5. INTERACCIÓN HOVER & TOOLTIP 3D
+        // ==========================================
+        function onMouseMove(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(barMeshes);
+
+            if (intersects.length > 0) {
+                const intersectedObj = intersects[0].object;
+
+                if (hoveredObject !== intersectedObj) {
+                    // Restaurar previo
+                    if (hoveredObject) {
+                        hoveredObject.material.emissiveIntensity = 0.15;
+                    }
+                    hoveredObject = intersectedObj;
+                    // Resaltar hover
+                    hoveredObject.material.emissiveIntensity = 0.8;
+                }
+
+                // Mostrar Tooltip
+                const data = hoveredObject.userData;
+                const firstLabelKey = Object.keys(data.dataRow).find(k => k !== selectedValueColumn) || Object.keys(data.dataRow)[0];
+                const titleVal = data.dataRow[firstLabelKey] || `Fila #${data.rowIndex}`;
+
+                document.getElementById('tooltip-title').textContent = titleVal;
+                document.getElementById('tooltip-value').textContent = data.val.toLocaleString();
+                document.getElementById('tooltip-row').textContent = `#${data.rowIndex}`;
+                document.getElementById('tooltip-extra').textContent = `${selectedValueColumn}`;
+
+                tooltip.style.left = `${event.clientX + 15}px`;
+                tooltip.style.top = `${event.clientY + 15}px`;
+                tooltip.classList.remove('hidden');
+
+            } else {
+                if (hoveredObject) {
+                    hoveredObject.material.emissiveIntensity = 0.15;
+                    hoveredObject = null;
+                }
+                tooltip.classList.add('hidden');
+            }
+        }
+
+        // ==========================================
+        // 6. EVENT LISTENERS Y CONFIGURACIÓN UI
+        // ==========================================
+        function setupEventListeners() {
+            // Drag and Drop
+            dropzone.addEventListener('click', () => fileInput.click());
+
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('border-indigo-500', 'bg-slate-800');
+            });
+
+            dropzone.addEventListener('dragleave', () => {
+                dropzone.classList.remove('border-indigo-500', 'bg-slate-800');
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('border-indigo-500', 'bg-slate-800');
+                if (e.dataTransfer.files.length > 0) {
+                    handleFileSelect(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+
+            // Cambio de columna numèrica Y
+            columnSelect.addEventListener('change', (e) => {
+                selectedValueColumn = e.target.value;
+                update3DScene();
+            });
+
+            // Controles 3D
+            autoRotateCheck.addEventListener('change', (e) => {
+                controls.autoRotate = e.target.checked;
+            });
+
+            colorSchemeSelect.addEventListener('change', () => {
+                update3DScene();
+            });
+
+            heightScaleInput.addEventListener('input', (e) => {
+                heightScaleVal.textContent = `${parseFloat(e.target.value).toFixed(1)}x`;
+                update3DScene();
+            });
+
+            // Resetear Posición de Cámara
+            document.getElementById('resetCamBtn').addEventListener('click', () => {
+                camera.position.set(25, 20, 30);
+                controls.target.set(0, 0, 0);
+                controls.update();
+            });
+
+            // Mostrar/Ocultar Tabla 2D
+            toggleTableBtn.addEventListener('click', () => {
+                tablePanel.classList.toggle('hidden');
+                tableBtnText.textContent = tablePanel.classList.contains('hidden') ? 'Mostrar Tabla 2D' : 'Ocultar Tabla 2D';
+            });
+
+            closeTableBtn.addEventListener('click', () => {
+                tablePanel.classList.add('hidden');
+                tableBtnText.textContent = 'Mostrar Tabla 2D';
+            });
+        }
+
+        // ==========================================
+        // 7. INICIO AL CORDAR LA PÁGINA
+        // ==========================================
+        window.onload = function() {
+            init3D();
+            setupEventListeners();
+            
+            // Cargar datos por defecto al iniciar
+            processParsedData();
+        };
     </script>
 </body>
 </html>
+```
