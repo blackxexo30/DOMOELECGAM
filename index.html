@@ -1533,25 +1533,22 @@
                 if (d){
                     if (d) {
                         function l() {
-                                var user = document.getElementById("user").value;
-                                var pass = document.getElementById("pass").value;
-                                switch(user){
-                                    case "dada":
-                                        switch(pass){
-                                            case "dodo":
-                                                alert("iniciado");
-                                                document.getElementById("gam").style.display = "block";
-                                                document.getElementById("respuestaGam").textContent =
-                                                    "Hola " + user;
-                                                document.getElementById("domoelecgam").style.display = "block";
-                                                document.getElementById("nav_domoelecgam").style.display = "block";
-                                                document.getElementById("l").style.display = "none";
-                                                document.getElementById("user").value = "";
-                                                document.getElementById("pass").value = "";
-                                                break;
-                                        }
-                                        break;
-                                }
+                            var user = document.getElementById("user").value;
+                            var pass = document.getElementById("pass").value;
+                            switch(user){
+                                case "dada":
+                                    switch(pass){
+                                        case "dodo":
+                                            document.getElementById("gam").style.display = "block";
+                                            document.getElementById("respuestaGam").textContent="Hola"+user;
+                                            document.getElementById("domoelecgam").style.display = "block";
+                                            document.getElementById("nav_domoelecgam").style.display = "block";
+                                            document.getElementById("l").style.display = "none";
+                                            document.getElementById("user").value = "";
+                                            document.getElementById("pass").value = "";
+                                            break;
+                                    }
+                                    break;
                             }
                         }
                     }
