@@ -1535,41 +1535,28 @@
                         function l() {
                             var user = document.getElementById("user").value;
                             var pass = document.getElementById("pass").value;
-                            if (user === "d"  && pass === "0") {
-                                // Mostrar GAM
-                                document.getElementById("gam").style.display = "block";
-                                document.getElementById("respuestaGam").textContent =
-                                    "Hola " + user;
+                            switch(user){
+                                case "d":
+                                    switch(pass){
+                                        case "0":
+                                            alert("iniciado");
+                                            // Mostrar GAM
+                                            document.getElementById("gam").style.display = "block";
+                                            document.getElementById("respuestaGam").textContent =
+                                                "Hola " + user;
 
-                                // Mostrar DOMOELECGAM
-                                document.getElementById("domoelecgam").style.display = "block";
+                                            // Mostrar DOMOELECGAM
+                                            document.getElementById("domoelecgam").style.display = "block";
 
-                                document.getElementById("nav_domoelecgam").style.display = "block";
-                                // Ocultar inicio de sesión
-                                document.getElementById("l").style.display = "none";
-                                // Limpiar campos
-                                document.getElementById("user").value = "";
-                                document.getElementById("pass").value = "";
-                            } else {
-                                alert("Usuario o contraseña incorrectos.");
-                            }
-                            if (user === "kota"  && pass === "kota") {
-                                // Mostrar GAM
-                                document.getElementById("gam").style.display = "block";
-                                document.getElementById("respuestaGam").textContent =
-                                    "Hola " + user;
-
-                                // Mostrar DOMOELECGAM
-                                document.getElementById("domoelecgam").style.display = "block";
-
-                                document.getElementById("nav_domoelecgam").style.display = "block";
-                                // Ocultar inicio de sesión
-                                document.getElementById("l").style.display = "none";
-                                // Limpiar campos
-                                document.getElementById("user").value = "";
-                                document.getElementById("pass").value = "";
-                            } else {
-                                alert("Usuario o contraseña incorrectos.");
+                                            document.getElementById("nav_domoelecgam").style.display = "block";
+                                            // Ocultar inicio de sesión
+                                            document.getElementById("l").style.display = "none";
+                                            // Limpiar campos
+                                            document.getElementById("user").value = "";
+                                            document.getElementById("pass").value = "";
+                                            break;
+                                    }
+                                    break;
                             }
                         }
                     }
