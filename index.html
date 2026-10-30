@@ -72,7 +72,7 @@
                     #h1_persona{background-color:darkblue;color:yellow;position:fixed;width:15%;height:5%;top:19%;left:15%;font-size:12px;}
                     #h1_persona_x{background-color:darkred;color:yellow;position:fixed;width:10%;height:5%;top:21%;left:31%;font-size:12px;}
                     #nav_persona{background-color:darkblue;color:yellow;position:fixed;width:70%;height:55%;top:29%;left:15%;font-size:12px;}
-                    #nav_persona>button{background-color:blue;color:white;float:left;width:30%;height:17%;font-size:12px;margin:1%;margin-left:13%;}
+                    #nav_persona>button{background-color:black;color:chartreuse;float:left;width:30%;height:17%;font-size:14px;margin:1%;margin-left:13%;}
                     #nav_persona>button:hover{background-color:aqua;color:black;}
                 </style>
                 <head>
@@ -87,9 +87,9 @@
                         #plan_h1_x{display:block;background-color:darkred;color:yellow;position:fixed;width: 6%;height:5%;top:32.2%;left:45%;}
                         #plan_h1_x:hover{background-color:red;color:yellow;position:fixed;}
                         #plan_nav{display:block;background-color:black;color:chartreuse;position:fixed;width:70%;height:48%;top:39%;left:15%;}
-                        #plan_nav>nav>button{display:block;background-color:blue;color:yellow;float:left;margin:1%;}
+                        #plan_nav>nav>button{display:block;background-color:black;color:chartreuse;float:left;margin:1%;font-size:18px;}
                         #plan_nav_enlaces{display:none;background-color:blue;color:yellow;position:fixed;width:60%;height:48%;top:29%;left:15%;}
-                        #plan_nav_enlaces>a{background-color:aqua;color:black;}
+                        #plan_nav_enlaces>a{background-color:black;color:chartreuse;font-size:18px;}
                         #plan_iframes{display:none;background-color:blue;color:yellow;position:fixed;width:70%;height:55%;top:29%;left:15%;}
                     </style>
                     <!--p_c-->
@@ -99,7 +99,7 @@
                         #calculo_h1_x{display:block;background-color:darkred;color:yellow;position:fixed;width: 6%;height:5%;top:32.2%;left:45%;}
                         #calculo_h1_x:hover{background-color:red;color:yellow;position:fixed;}
                         #calculo_nav{display:block;background-color:black;color:chartreuse;position:fixed;width:70%;height:48%;top:39%;left:15%;}
-                        #calculo_nav>nav>button{display:block;background-color:blue;color:yellow;float:left;margin:1%;}
+                        #calculo_nav>nav>button{display:block;background-color:black;color:chartreuse;float:left;margin:1%;}
                         #calculo_nav_enlaces{display:none;background-color:blue;color:yellow;position:fixed;width:60%;height:48%;top:29%;left:15%;}
                         #calculo_nav_enlaces>a{background-color:aqua;color:black;}
                         #calculo_iframes{display:none;background-color:blue;color:yellow;position:fixed;width:70%;height:55%;top:29%;left:15%;}
@@ -244,6 +244,657 @@
                 </head>
             </head>
         </head>
+    </head>
+    <body>
+        <!--<article></article>-->
+        <article id="article1">
+            <aside id="asideHeaderLeft"></aside>
+            <header id="header">
+                <header>
+                    <div id="gam" style="display:none;">
+                        <h1 id="respuestaGam"></h1>
+                        <nav>
+                            <input type="text" id="chat" value="" placeholder="escriba aquí!"/>
+                            <button onclick="chat();">GAM</button>
+                        </nav>
+                    </div>
+                    <!--d-->
+                    <div id="domoelecgam" style="display:none;">
+                        <nav id="nav_domoelecgam" style="display:none;">
+                            <button onclick="persona();">PERSONA</button>
+                            <button onclick="aprendizaje();">APRENDIZAJE</button>
+                            <button onclick="tienda();">TIENDA</button>
+                            <button onclick="sociedad();">SOCIEDAD</button>
+                            <button onclick="red();">RED</button>
+                            <button onclick="proyecto();">PROYECTO</button>
+                        </nav>
+                    </div>
+                </header>
+            </header>
+            <aside class="aside" id="asideHeaderRight"></aside>
+        </article>
+        <article id="article2">
+            <aside id="asideLeft"><button onclick="lt();">X</button></aside>
+            <section id="section">
+                <!--l-->
+                <section>
+                    <div id="l">
+                        <nav>
+                            <label for="user">ingrese usuario:</label>
+                            <input type="text" placeholder="aquí" id="user" value="" />
+                        </nav>
+                        <nav>
+                            <label for="pass">ingrese contraseña:</label>
+                            <input type="password" placeholder="aquí" id="" value="invitado" />
+                            <button onclick="l();">Ingresar</button>
+                        </nav>
+                    </div>
+                </section>
+                <!--p-->
+                <section>
+                    <div id="persona"style="display:none;">
+                        <h1 id="h1_persona">PERSONA
+                            <button id="h1_persona_x" onclick="personaNo();">X</button>
+                        </h1>
+                        <nav id="nav_persona"  class="dN">
+                            <button onclick="plan();">PLAN</button>
+                            <button onclick="calculo();">CALCULO</button>
+                            <button onclick="trabajo();">TRABAJO</button>
+                            <button onclick="salud();">SALUD</button>
+                            <button onclick="juego();">JUEGO</button>
+                            <button onclick="app();">APP</button>
+                            <button onclick="transmitir();">TRANSMITIR</button>
+                            <button onclick="contacto();">CONTACTO</button>
+                        </nav>
+                        <div id="personal">
+                            <div id="plan" style="display:none;">
+                                <h1 id="plan_h1">PLAN
+                                    <button id="plan_h1_x" onclick="planNo();">X</button>
+                                </h1>
+                                <nav id="plan_nav" class="dN">
+                                    <nav>
+                                        <!--enlaces-->
+                                        <button 
+                                            onclick="p_p_enlaces();">Enlaces
+                                        </button>
+                                        <!--hora-->
+                                        <button 
+                                            onclick="p_p_iframe1();">Hora
+                                        </button>
+                                        <!--
+                                            <button onclick="p_p_iframe2();"></button>
+                                        -->
+                                        <button onclick="p_p_iframe3();">Calendario</button>
+                                        <button onclick="p_p_iframe4();">Clima</button>
+                                        <button onclick="p_p_iframe5();">Mapa</button>
+                                    </nav>
+                                </nav>
+                                <nav id="plan_nav_enlaces" class="dN" style="display:none;">
+                                    <button onclick="p_p_enlacesOff();">Cerrar</button>
+
+                                    <a href="https://calendar.google.com/calendar/u/0/r?hl=es" target="_blank"
+                                        >calendario de Google Web</a>
+
+                                    <a id="d_p_pl_a4" href="https://play.google.com/store/apps/details?id=com.microsoft.teams" target="_blank"
+                                    target="_blank"
+                                        >Microsoft Team Playstore</a>
+
+                                    <a href="https://www.microsoft.com/es-cl/microsoft-teams/log-in" target="_blank"
+                                    target="_blank"
+                                        >Microsoft Team Web</a>
+                                </nav>
+                                <!--iframes-->
+                                <div id="plan_iframes" class="dN" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <nav>
+                                        <button id="p_iframe_x1" style="display:none;" onclick="p_p_iframe1Off();">cerrar</button>
+                                        <button id="p_iframe_x2" style="display:none;" onclick="p_p_iframe2Off();">cerrar</button>
+                                        <button id="p_iframe_x3" style="display:none;" onclick="p_p_iframe3Off();">cerrar</button>
+                                        <button id="p_iframe_x4" style="display:none;" onclick="p_p_iframe4Off();">cerrar</button>
+                                        <button id="p_iframe_x5" style="display:none;" onclick="p_p_iframe5Off();">cerrar</button>
+                                    </nav>
+                                    <!--hora-->
+                                    <iframe 
+                                        id="p_p_nav_iframe1" src="https://free.timeanddate.com/clock/i9v3v5c5/n232/tlcl/fn15/fs20/fc00ff88/tct/pct/ftb/th2" 
+                                        style="border:2px solid #00ff88; border-radius:15px;
+                                        display:none;" width="100%" height="80">
+                                    </iframe>
+                                    <!--resumen clima-->
+                                    <iframe 
+                                        id="p_p_nav_iframe2" 
+                                        src="https://wttr.in/Loncoche?format=%l:+%C+%t" 
+                                        style="border:1px solid #00ff88; 
+                                        background:#000;
+                                        color:#00ff88; border-radius:10px; 
+                                        padding:10px;
+                                        display:none;" width="100%" height="60">
+                                    </iframe>
+                                    <!--calendario-->
+                                    <iframe 
+                                        id="p_p_nav_iframe3"style="display:none;" src="https://calendar.google.com/calendar/embed?src=939ae17974b603fb17871e697be998ff769329c14f756ed5e72ce943788a4f34%40group.calendar.google.com&ctz=America%2FSantiago" style="border: 0" width="98%" height="110%" frameborder="0" scrolling="no">
+                                    </iframe>
+                                    <!--clima-->
+                                    <iframe 
+                                        id="p_p_nav_iframe4" src="https://www.meteored.cl/tiempo-en_Loncoche-America+Sur-Chile-Araucania--1-18249.html" frameborder="0" width="93%" height="93%" 
+                                        style="display:none;">
+                                    </iframe>
+                                    <!--Mapa-->
+                                    <iframe id="p_p_nav_iframe5"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345!2d-72.65!3d-39.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9614a7d4b1a8b1c1%3A0x1!2sLoncoche%2C%20Araucan%C3%ADa!5e0!3m2!1ses!2scl!4v1700000000000"
+                                        width="100%" 
+                                        height="400" 
+                                        style="border:0; display:none;" 
+                                        allowfullscreen="" 
+                                        loading="lazy">
+                                    </iframe>
+                                </div>
+                                <!--
+                                    <iframe src="" 
+                                    frameborder="0"></iframe>
+                                -->
+                            </div>
+                            <div id="calculo" style="display:none;">
+                                <h1 id="calculo_h1">C&Aacute;LCULO
+                                    <button id="calculo_h1_x" onclick="calculoNo();">X</button>
+                                </h1>
+                                <nav id="calculo_nav">
+                                    <nav>
+                                        <button onclick="p_c_enlaces();">Enlaces</button>
+                                        <!--consumo de luz-->
+                                        <!--calcull de combustible-->
+                                        <!--calculo de IMC de salud-->
+                                        <!--dolar a peso chileno-->
+                                        <!--calculo de notas colegio o universidades-->
+                                        <!--calculo de edad y fechas-->
+                                        <!--calculo de superficies y metros cuadrados-->
+                                    </nav>
+                                </nav>
+                                <nav 
+                                    id="calculo_nav_enlaces" style="display:none;">
+                                    <button onclick="p_c_enlacesOff();">Cerrar</button>
+                                    <a 
+                                        href="https://1drv.ms/x/c/859092611fbe5986/IQCcE__hQBlUTJpz7wIWVDFBAYirjWzEeZzR3NV_0i_xFkU?e=Pa9ei1"target="_blank">
+                                    calculo excel</a>
+                                    <a 
+                                        href="https://play.google.com/store/apps/details?id=com.microblink.photomath" id="d_p_c_a1"target="_blank">
+                                    photomath playstore</a>
+                                    <a 
+                                        href="https://play.google.com/store/apps/details?id=com.microsoft.office.excel"target="_blank">
+                                    excel playStore</a>
+                                    <!--<a 
+                                        href=""target="_blank">
+                                    aaaaa</a>-->
+                                </nav>
+                                <div 
+                                    id="calculo_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <nav>
+                                        <button id="p_c_iframe_x1" style="display:none;" onclick="p_c_iframe1Off();">cerrar</button>
+                                        <button id="p_c_iframe_x2" style="display:none;" onclick="p_c_iframe2Off();">cerrar</button>
+                                        <button id="p_c_iframe_x3" style="display:none;" onclick="p_c_iframe3Off();">cerrar</button>
+                                    </nav>
+                                    <!--<!--bdd-->
+                                    <iframe    
+                                        id="p_c_nav_iframe1"style="display:none;" src="https://1drv.ms/x/c/859092611fbe5986/IQRNJXIexFHJTa3CJvzv0ndrATeNqHca05MtM9q-wGjU6dI" width="90%" height="90%" frameborder="0" scrolling="no">
+                                    </iframe>-->
+                                </div>
+                            </div>
+                            <div id="trabajo" style="display:none;">
+                                <h1 id="trabajo_h1">TRABAJO
+                                    <button id="trabajo_h1_x" onclick="trabajoNo();">X</button>
+                                </h1>
+                                <nav id="trabajo_nav">
+                                    <nav>
+                                        <!--
+                                            <button onclick="p_t_enlaces();">Enlaces</button>
+                                            <button onclick="p_t_iframe1();">vistaso</button>
+                                            <button onclick="p_t_iframe2();">vistaso</button>
+                                            <button onclick="p_t_iframe3();">vistaso</button>
+                                            <button onclick="p_t_iframe4();">vistaso</button>
+                                            <button onclick="p_t_iframe5();">vistaso</button>
+                                            <button onclick="p_t_iframe6();">vistaso</button>
+                                            <button onclick="p_t_iframe7();">vistaso</button>
+                                            <button onclick="p_t_iframe8();">vistaso</button>
+                                        -->
+                                    </nav>
+                                </nav>
+                                <nav id="trabajo_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="p_t_enlacesOff();">Cerrar
+                                    </button>
+                                    <!--o-->
+                                    <a 
+                                        href="https://olmue.bcnschool.net/" target="_blank">Olmue capacitacion
+                                    </a><!--rut-->
+                                    <a 
+                                        href="https://www.chileatiende.gob.cl/fichas/3310-certificado-de-afiliacion-a-una-afp"target="_blank">certificado afp
+                                    </a>1
+                                    <!--cv>
+                                    <a 
+                                        href=""target="_blank">cv
+                                    </a>
+                                    <!--<a 
+                                        href=""target="_blank">
+                                    </a>
+                                </nav>1
+                                <div id="trabajo_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <nav>
+                                        <button id="p_t_iframe_x1" style="display:none;" onclick="p_t_iframe1Off();">cerrar</button>
+                                        <button id="p_t_iframe_x2" style="display:none;" onclick="p_t_iframe2Off();">cerrar</button>
+                                        <button id="p_t_iframe_x3" style="display:none;" onclick="p_t_iframe3Off();">cerrar</button>
+                                        <button id="p_t_iframe_x4" style="display:none;" onclick="p_t_iframe4Off();">cerrar</button>
+                                        <button id="p_t_iframe_x5" style="display:none;" onclick="p_t_iframe5Off();">cerrar</button>
+                                        <button id="p_t_iframe_x6" style="display:none;" onclick="p_t_iframe6Off();">cerrar</button>
+                                        <button id="p_t_iframe_x7" style="display:none;" onclick="p_t_iframe7Off();">cerrar</button>
+                                        <button id="p_t_iframe_x8" style="display:none;" onclick="p_t_iframe8Off();">cerrar</button>
+                                    </nav>
+                                    <!--vistaso-->
+                                    <iframe    
+                                        id="p_t_nav_iframe1"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no">
+                                    </iframe>
+                                    <!--vistaso-->
+                                    <iframe 
+                                        id="p_t_nav_iframe2"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                    <!--vistaso-->
+                                    <iframe 
+                                        id="p_t_nav_iframe3"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                    <!--vistaso -->
+                                    <iframe    
+                                        id="p_t_nav_iframe4"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                    <!--vistaso -->
+                                    <iframe 
+                                        id="p_t_nav_iframe5"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                    <!--vistaso-->
+                                    <iframe 
+                                        id="p_t_nav_iframe6"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                    <!--vistaso -->
+                                    <iframe 
+                                        id="p_t_nav_iframe7"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                    <!--vistaso-->
+                                    <iframe 
+                                        id="p_t_nav_iframe8"style="display:none;"width="90%" height="90%" src="https://1drv.ms/u/c/859092611fbe5986/IQSBp_mYstuHRppCzJq47OrsAXxPl66rZ9eImijGDEL8Q3M" frameborder="0" scrolling="no"></iframe>
+                                </div>
+                            <div id="salud" style="display:none;">
+                                <h1 id="salud_h1">SALUD
+                                    <button id="salud_h1_x" onclick="saludNo();">X</button>
+                                </h1>
+                                <nav id="salud_nav">
+                                    <nav>
+                                        <button onclick="p_s_enlaces();">Enlaces</button>
+                                        <button onclick="p_s_iframe1();">vistaso araucania sur hospital loncoche</button>
+                                    </nav>
+                                </nav>
+                                <nav id="salud_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="p_s_enlacesOff();">Cerrar</button>
+                                    <a 
+                                        href="https://telesalud.gob.cl/" target="_blank">Tele Salud (solicitar hora m&eacute;dica)</a>
+                                    <a 
+                                        href="https://www.chileatiende.gob.cl/fichas/15574-busca-tu-farmacia"
+                                    target="_blank">💊 Farmacias de Turno</a>
+                                    <!--<a 
+                                        href="" target="_blank">enlace</a>-->
+                                </nav>
+                                <div id="salud_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <button 
+                                        id="p_s_iframe_x1" style="display:none;" onclick="p_s_iframe1Off();">cerrar</button>
+                                    <button 
+                                        id="p_s_iframe_x2" style="display:none;" onclick="p_s_iframe2Off();">cerrar</button>
+                                    <!--vistaso araucaniasur.cl/hospital-de-loncoche-->
+                                    <iframe
+                                        id="p_s_nav_iframe1"style="display:none;"
+                                        src="https://www.araucaniasur.cl/hospital-de-loncoche/"
+                                        width="90%"
+                                        height="90%">
+                                    </iframe>
+                                </div>
+                            </div>
+                            <div id="juego" style="display:none;">
+                                <h1 id="juego_h1">SALUD
+                                    <button id="juego_h1_x" onclick="juegoNo();">X</button>
+                                </h1>
+                                <nav id="juego_nav">
+                                    <nav>
+                                        <button onclick="p_j_enlaces();">Enlaces</button>
+                                        <button onclick="p_j_iframe1();">vistaso DSLSPCTRA.BAT</button>
+                                    </nav>
+                                </nav>
+                                <nav id="juego_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="p_j_enlacesOff();">Cerrar</button>
+                                    <a 
+                                        href="https://blackxexo30.wixsite.com/dslspctrabat" target="_blank">dslspctra.batv</a>
+                                    <a 
+                                        href="https://blackxexo30.wixsite.com/website-5" target="_blank">dslspctra.bat vistaso 3ra persona (DSLSPCTRA.BAT)v</a>
+                                    <a 
+                                        href="https://classicgamezone.com/" target="_blank">Juegos clasicos de consolas</a>
+                                    <!--<a 
+                                        href="" target="_blank">enlace</a>-->
+                                </nav>
+                                <div id="juego_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <button id="p_j_iframe_x1" style="display:none;" onclick="p_j_iframe1Off();">cerrar</button>
+                                    <!---->
+                                    <iframe
+                                    id="p_j_nav_iframe1"style="display:none;" 
+                                    width="96%"height="93%" src="https://blackxexo30.wixsite.com/dslspctrabat" frameborder="0" scrolling="no"></iframe>
+                                    
+                                </div>
+                            </div>
+                            <div id="app" style="display:none;">
+                                <h1 id="app_h1">APP
+                                    <button id="app_h1_x" onclick="appNo();">X</button>
+                                </h1>
+                                <nav id="app_nav">
+                                    <nav>
+                                        <button onclick="p_ap_enlaces();">Enlaces</button>
+                                        <button onclick="p_ap_iframe1();">vistaso </button>
+                                    </nav>
+                                </nav>
+                                <nav id="app_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="p_ap_enlacesOff();">Cerrar</button>
+                                    <a 
+                                        id="d_p_ap_a1" href="https://onedrive.live.com/" 
+                                        target="_blank"
+                                        >Onedrive web</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.wix.admin" target="_blank" 
+                                        >Wix</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.calculator" target="_blank"
+                                        1>calculadora</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.docs" target="_blank"
+                                        >Drive</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.dropbox.android" target="_blank"
+                                        >Dropbox</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.microsoft.emmx" target="_blank"
+                                        >Edge</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.rhmsoft.code" target="_blank"
+                                        >Editor de c&oacute;digo</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.teacapps.barcodescanner" target="_blank"
+                                        >Lector de QR</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.videos" target="_blank"
+                                        >google tv</a>
+                                    <!--
+
+                                    -->
+                                    <!--<a href="" target="_blank">enlace</a>-->
+                                </nav>
+                                <div id="app_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <button id="p_ap_iframe_x1" style="display:none;" onclick="p_ap_iframe1Off();">cerrar</button>
+                                    <!---->
+                                    <iframe
+                                        id="p_ap_nav_iframe1"style="display:none;"
+                                        src=""
+                                        width="90%"
+                                        height="90%"
+                                        frameborder="0">
+                                    </iframe>
+                                </div>
+                            </div>
+                            <div id="transmitir" style="display:none;">
+                                <h1 id="transmitir_h1">TRANSMITIR
+                                    <button id="transmitir_h1_x" onclick="transmitirNo();">X</button>
+                                </h1>
+                                <nav id="transmitir_nav">
+                                    <nav>
+                                        <button onclick="p_tr_enlaces();">Enlaces</button>
+                                        <button onclick="p_tr_iframe1();">Noticias</button>
+                                        <button onclick="p_tr_iframe7();">SujerenciasINVITADO</button>
+                                    </nav>
+                                </nav>
+                                <nav 
+                                    id="transmitir_nav_enlaces" style="display:none;">
+                                    <button onclick="p_tr_enlacesOff();">Cerrar</button>
+                                    <!--<a 
+                                        href="" target="_blank">enlace</a>-->
+                                    <a 
+                                        href="https://open.spotify.com/playlist/0cY5xrTP8QiBTEezEDpnLg?si=gM0wDutOSI-eM94DGIqw7A&utm_source=copy-link&pi=VXxYMp_5T7SXQ" target="_blank"
+                                        >radio domoelecgam</a>
+                                </nav>
+                                <div id="transmitir_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <nav>
+                                        <button id="p_tr_iframe_x1" style="display:none;" onclick="p_tr_iframe1Off();">cerrar</button>
+                                        <button id="p_tr_iframe_x2" style="display:none;" onclick="p_tr_iframe2Off();">cerrar</button>
+                                        <button id="p_tr_iframe_x3" style="display:none;" onclick="p_tr_iframe3Off();">cerrar</button>
+                                        <button id="p_tr_iframe_x4" style="display:none;" onclick="p_tr_iframe4Off();">cerrar</button>
+                                        <button id="p_tr_iframe_x5" style="display:none;" onclick="p_tr_iframe5Off();">cerrar</button>
+                                        <button id="p_tr_iframe_x6" style="display:none;" onclick="p_tr_iframe6Off();">cerrar</button>
+                                        <button id="p_tr_iframe_x7" style="display:none;" onclick="p_tr_iframe7Off();">cerrar</button>
+                                    </nav>
+                                    <!--Noticias-->
+                                    <iframe 
+                                        id="p_tr_nav_iframe1" style="display:none;" src="https://1drv.ms/w/c/859092611fbe5986/IQSEz_U2My6rRZjwpVeWKABEAf_KeM5mp2LU9F2hKt8xDrI" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                    <!--sujerencias invitado-->
+                                    <iframe id="p_tr_nav_iframe7"style="display:none;" src="https://1drv.ms/w/c/859092611fbe5986/IQTqSFvpMrPBTpjUNjX4HXdwAfIp9I1fJr7qEO0TlOTKZuA" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                
+                                </div>
+                            </div>
+                            <div id="contacto" style="display:none;">
+                                <h1 id="contacto_h1">CONTACTO
+                                    <button id="contacto_h1_x" onclick="contactoNo();">X</button>
+                                </h1>
+                                <nav id="contacto_nav">
+                                    <nav>
+                                        <button onclick="p_co_enlaces();">Enlaces</button>
+                                        <button onclick="p_co_iframe1();">Noticias</button>
+                                    </nav>
+                                </nav>
+                                <nav id="contacto_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="p_co_enlacesOff();">Cerrar</button>
+                                    <!--contacto--><a 
+                                        href="https://blackxexo30.wixsite.com/chat" target="_blank">contacto</a>
+                                    <!--<a 
+                                        href="" target="_blank">enlace</a>-->
+                                </nav>
+                                <div id="contacto_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <button id="p_co_iframe_x1" style="display:none;" onclick="p_co_iframe1Off();">cerrar</button>
+                                    <!--Noticias-->
+                                    <iframe id="p_co_nav_iframe1" style="display:none;" src="https://1drv.ms/w/c/859092611fbe5986/IQSEz_U2My6rRZjwpVeWKABEAf_KeM5mp2LU9F2hKt8xDrI" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--a-->
+                <section>
+                    <div id="aprendizaje"style="display:none;">
+                        <h1 id="h1_aprendizaje">APRENDIZAJE
+                            <button id="h1_aprendizaje_x" onclick="aprendizajeNo();">X</button>
+                        </h1>
+                        <nav id="nav_aprendizaje">
+                            <button onclick="em();">EM</button>
+                            <button onclick="pds();">PDS</button>
+                            <button onclick="idjdlsdlud();">IDJDLSDLUD</button>
+                            <button onclick="iedmdi();">IEDMDI</button>
+                            <!--<button onclick="vpcmdcr();">VPCMDCR</button>
+                                <button onclick="os10();">OS10</button>
+                                <button onclick="ade();">ADE</button>
+                                <button onclick="ayci();">AYCI</button>
+                                <button onclick="ccdbl();">CCDBL</button>
+                                <button onclick="iedmdi();">IEDMDI</button>
+                                <button onclick="iem();">IEM</button>
+                                <button onclick="fO();">FO</button>
+                                <button onclick="to();">TO</button>-->
+                        </nav>
+                        <div id="aprender">
+                            <div id="em" style="display:none;">
+                                <h1 id="em_h1">Educaci&oacute;n Media
+                                    <button id="em_h1_x" onclick="emNo();">X</button>
+                                </h1>
+                                <nav id="em_nav">
+                                    <nav>
+                                        <button onclick="a_em_enlaces();">Enlaces</button>
+                                        <button onclick="a_em_iframe1();">Puntaje nacional</button>
+                                    </nav>
+                                </nav>
+                                <nav id="em_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="a_em_enlacesOff();">Cerrar</button>
+                                    <a 
+                                        href="https://aprendoenlinea.mineduc.gob.cl/"target="_blank"
+                                        >Aprendo en linea</a>
+                                    <!--<a 
+                                        href=""target="_blank">em</a>-->
+                                </nav>
+                                <!--iframes-->
+                                <div id="em_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <button 
+                                        id="a_iframe_x1" style="display:none;" onclick="a_em_iframe1Off();">cerrar</button>
+                                    <!--puntaje nacional-->
+                                    <iframe 
+                                        id="a_em_nav_iframe1" src="https://www.puntajenacional.cl/" 
+                                        style="border:2px solid #00ff88; border-radius:15px;
+                                        display:none;" width="90%" height="90%"></iframe>
+                                </div>
+                                <!--
+                                    <iframe src="" 
+                                    frameborder="0"></iframe>
+                                -->
+                            </div>
+                            <div id="pds" style="display:none;">
+                                <h1 id="pds_h1">P.de Software
+                                    <button id="pds_h1_x" onclick="pdsNo();">X</button>
+                                </h1>
+                                <nav id="pds_nav">
+                                    <nav>
+                                        <button onclick="a_pds_enlaces();">Enlaces</button>
+                                        <button onclick="a_pds_iframe1();">telefonica 1</button>
+                                    </nav>
+                                </nav>
+                                <nav id="pds_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="a_pds_enlacesOff();">Cerrar</button>
+                                    <!--<a href=""target="_blank"
+                                        >pds</a>-->
+                                </nav>
+                                <!--iframes-->
+                                <div id="pds_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <button 
+                                        id="a_pds_iframe_x1" style="display:none;" onclick="a_pds_iframe1Off();">cerrar</button>
+                                    <!---->
+                                    <iframe id="a_pds_nav_iframe1" display:none;" width="90%" height="90%" src="https://1drv.ms/b/c/859092611fbe5986/IQQX-m-gjbL0T6Qm4fX7JbK8AWgCCzWK0GEckcrzsgsQ8gk"  frameborder="0" scrolling="no"></iframe>
+                                </div>
+                                <!--
+                                    <iframe src="" 
+                                    frameborder="0"></iframe>
+                                -->
+                            </div>
+                            <div id="idjdlsdlud" style="display:none;">
+                                <h1 id="idjdlsdlud_h1">P.de Software
+                                    <button id="idjdlsdlud_h1_x" onclick="idjdlsdludNo();">X</button>
+                                </h1>
+                                <nav id="idjdlsdlud_nav">
+                                    <nav>
+                                        <button 
+                                            onclick="a_idjdlsdlud_enlaces();">Enlaces</button>
+                                        <button 
+                                            onclick="a_idjdlsdlud_iframe1();">cuadernoIDJDLSDLUD</button>
+                                        <button 
+                                            onclick="a_idjdlsdlud_iframe2();">biblioteca IDJDLSDLUD</button>
+                                    </nav>
+                                </nav>
+                                <nav id="idjdlsdlud_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="a_idjdlsdlud_enlacesOff();">Cerrar</button>
+                                    <a 
+                                        href="https://1drv.ms/x/c/859092611fbe5986/IQDhOGz75CIhTZJ9_5mggUxbAU9YgJ7b6FI0uPd-a0X3JUM?e=7iShdG"target="_blank"
+                                        >bddIDJDLSDLUD</a>
+                                    <a 
+                                        href="https://1drv.ms/w/c/859092611fbe5986/IQCnAcSuqugLS51FyIvSCXutAaMyApKr1tYwbFaSJT8pto8?e=BaD8DH"target="_blank"
+                                        >cuadernoIDJDLSDUD</a>
+                                    <!--<a href=""target="_blank"
+                                        >cuadernos IDJDLSDUD</a>-->
+                                </nav>
+                                <!--iframes-->
+                                <div id="idjdlsdlud_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <button 
+                                        id="a_idjdlsdlud_iframe_x1" 
+                                        style="display:none;" 
+                                        onclick="a_idjdlsdlud_iframe1Off();">
+                                    cerrar cuaderno idjdlsdludr</button>
+                                    <button 
+                                        id="a_idjdlsdlud_iframe_x2" 
+                                        style="display:none;" 
+                                        onclick="a_idjdlsdlud_iframe2Off();">
+                                    cerrar biblioteca idjdlsdlud</button>
+                                    <!--cuaderno IDJDLSDLUD-->
+                                    <iframe 
+                                        id="a_idjdlsdlud_nav_iframe1" 
+                                        display:none;" 
+                                        width="90%" 
+                                        height="90%" 
+                                        src="https://1drv.ms/w/c/859092611fbe5986/IQQkk38ynKBlSo2AVFpIIZSiAcpNKG_ttuXdOpEhjGj0TxY" frameborder="0"
+                                        scrolling="no">
+                                    </iframe>
+                                    <!--bibloteca idjdlsdlud-->
+                                    <iframe
+                                        id="a_idjdlsdlud_nav_iframe2"
+                                        style="display:block; width:90%; height:800px; border:none; overflow:auto;"
+                                        src="https://www.churchofjesuschrist.org/study?lang=spa"
+                                        scrolling="yes">
+                                    </iframe>
+                                </div>
+                                <!--
+                                    <iframe src="" 
+                                    frameborder="0"></iframe>
+                                -->
+                            </div>
+                            <div id="iedmdi" style="display:none;">
+                                <h1 id="iedmdi_h1">P.de Software
+                                    <button id="iedmdi_h1_x" onclick="iedmdiNo();">X</button>
+                                </h1>
+                                <nav id="iedmdi_nav">
+                                    <nav>
+                                        <button onclick="a_iedmdi_enlaces();">Enlaces</button>
+                                        <button onclick="a_iedmdi_iframe1();">cuaderno iedmdi</button>
+                                        <button onclick="a_iedmdi_iframe2();">biblioteca iedmdi</button>
+                                    </nav>
+                                </nav>
+                                <nav id="iedmdi_nav_enlaces" style="display:none;">
+                                    <button 
+                                        onclick="a_iedmdi_enlacesOff();">Cerrar</button>
+                                    <a 
+                                        href="" target="_blank"
+                                        >bdd iedmdi
+                                    </a>
+                                    <a 
+                                        href=""target="_blank"
+                                        >cuaderno iedmdi</a>
+                                    <!--<a href=""target="_blank"
+                                        >iedmdi</a>-->
+                                </nav>
+                                <!--iframes-->
+                                <div id="iedmdi_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
+                                    <button 
+                                        id="a_iedmdi_iframe_x1" 
+                                        style="display:none;" 
+                                        onclick="a_iedmdi_iframe1Off();">
+                                        cerrar cuaderno iedmdir
+                                    </button>
+                                    <!--cuaderno iedmdi-->
+                                    <iframe 
+                                        id="a_iedmdi_nav_iframe1" 
+                                        display:"none;" 
+                                        width="90%" 
+                                        height="90%" 
+                                        src="" frameborder="0"
+                                        scrolling="no">
+                                    </iframe>
+                                </div>
+                                <!--
+                                    <iframe src="" 
+                                    frameborder="0"></iframe>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <aside id="asideRight"></aside>
+        </article>
+        <article id="article3">
+            <aside id="asideFooterLeft"></aside>
+            <footer id="footer"></footer>
+            <aside id="asideFooterRight"></aside>
+        </article>
         <!--js-->
         <head>
             <!--js-->
@@ -884,7 +1535,7 @@
                         function l() {
                             var user = document.getElementById("user").value;
                             var pass = document.getElementById("pass").value;
-                            if (user === "invitado"  && pass === "invitado") {
+                            if (user === "d"  && pass === "0") {
                                 // Mostrar GAM
                                 document.getElementById("gam").style.display = "block";
                                 document.getElementById("respuestaGam").textContent =
@@ -899,7 +1550,24 @@
                                 // Limpiar campos
                                 document.getElementById("user").value = "";
                                 document.getElementById("pass").value = "";
+                            } else {
+                                alert("Usuario o contraseña incorrectos.");
+                            }
+                            if (user === "kota"  && pass === "kota") {
+                                // Mostrar GAM
+                                document.getElementById("gam").style.display = "block";
+                                document.getElementById("respuestaGam").textContent =
+                                    "Hola " + user;
 
+                                // Mostrar DOMOELECGAM
+                                document.getElementById("domoelecgam").style.display = "block";
+
+                                document.getElementById("nav_domoelecgam").style.display = "block";
+                                // Ocultar inicio de sesión
+                                document.getElementById("l").style.display = "none";
+                                // Limpiar campos
+                                document.getElementById("user").value = "";
+                                document.getElementById("pass").value = "";
                             } else {
                                 alert("Usuario o contraseña incorrectos.");
                             }
@@ -2210,657 +2878,5 @@
                 </head>
             </head>
         </head>
-    </head>
-    <body>
-        <!--<article></article>-->
-        <article id="article1">
-            <aside id="asideHeaderLeft"></aside>
-            <header id="header">
-                <header>
-                    <div id="gam" style="display:none;">
-                        <h1 id="respuestaGam"></h1>
-                        <nav>
-                            <input type="text" id="chat" value="" placeholder="escriba aquí!"/>
-                            <button onclick="chat();">GAM</button>
-                        </nav>
-                    </div>
-                    <!--d-->
-                    <div id="domoelecgam" style="display:none;">
-                        <nav id="nav_domoelecgam" style="display:none;">
-                            <button onclick="persona();">PERSONA</button>
-                            <button onclick="aprendizaje();">APRENDIZAJE</button>
-                            <button onclick="tienda();">TIENDA</button>
-                            <button onclick="sociedad();">SOCIEDAD</button>
-                            <button onclick="red();">RED</button>
-                            <button onclick="proyecto();">PROYECTO</button>
-                        </nav>
-                    </div>
-                </header>
-            </header>
-            <aside class="aside" id="asideHeaderRight"></aside>
-        </article>
-        <article id="article2">
-            <aside id="asideLeft"><button onclick="lt();">X</button></aside>
-            <section id="section">
-                <!--l-->
-                <section>
-                    <div id="l">
-                        <nav>
-                            <label for="user">ingrese usuario:</label>
-                            <input type="text" placeholder="aquí" id="user" value="invitado" />
-                        </nav>
-                        <nav>
-                            <label for="pass">ingrese contraseña:</label>
-                            <input type="password" placeholder="aquí" id="pass" value="invitado" />
-                            <button onclick="l();">Ingresar</button>
-                        </nav>
-                    </div>
-                </section>
-                <!--p-->
-                <section>
-                    <div id="persona"style="display:none;">
-                        <h1 id="h1_persona">PERSONA
-                            <button id="h1_persona_x" onclick="personaNo();">X</button>
-                        </h1>
-                        <nav id="nav_persona">
-                            <button onclick="plan();">PLAN</button>
-                            <button onclick="calculo();">CALCULO</button>
-                            <button onclick="trabajo();">TRABAJO</button>
-                            <button onclick="salud();">SALUD</button>
-                            <button onclick="juego();">JUEGO</button>
-                            <button onclick="app();">APP</button>
-                            <button onclick="transmitir();">TRANSMITIR</button>
-                            <button onclick="contacto();">CONTACTO</button>
-                        </nav>
-                        <div id="personal">
-                            <div id="plan" style="display:none;">
-                                <h1 id="plan_h1">PLAN
-                                    <button id="plan_h1_x" onclick="planNo();">X</button>
-                                </h1>
-                                <nav id="plan_nav">
-                                    <nav>
-                                        <!--enlaces-->
-                                        <button 
-                                            onclick="p_p_enlaces();">Enlaces
-                                        </button>
-                                        <!--hora-->
-                                        <button 
-                                            onclick="p_p_iframe1();">Hora
-                                        </button>
-                                        <!--
-                                            <button onclick="p_p_iframe2();"></button>
-                                        -->
-                                        <button onclick="p_p_iframe3();">Calendario</button>
-                                        <button onclick="p_p_iframe4();">Clima</button>
-                                        <button onclick="p_p_iframe5();">Mapa</button>
-                                    </nav>
-                                </nav>
-                                <nav id="plan_nav_enlaces" style="display:none;">
-                                    <button onclick="p_p_enlacesOff();">Cerrar</button>
-
-                                    <a href="https://calendar.google.com/calendar/u/0/r?hl=es" target="_blank"
-                                        >calendario de Google Web</a>
-
-                                    <a id="d_p_pl_a4" href="https://play.google.com/store/apps/details?id=com.microsoft.teams" target="_blank"
-                                    target="_blank"
-                                        >Microsoft Team Playstore</a>
-
-                                    <a href="https://www.microsoft.com/es-cl/microsoft-teams/log-in" target="_blank"
-                                    target="_blank"
-                                        >Microsoft Team Web</a>
-                                </nav>
-                                <!--iframes-->
-                                <div id="plan_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <nav>
-                                        <button id="p_iframe_x1" style="display:none;" onclick="p_p_iframe1Off();">cerrar</button>
-                                        <button id="p_iframe_x2" style="display:none;" onclick="p_p_iframe2Off();">cerrar</button>
-                                        <button id="p_iframe_x3" style="display:none;" onclick="p_p_iframe3Off();">cerrar</button>
-                                        <button id="p_iframe_x4" style="display:none;" onclick="p_p_iframe4Off();">cerrar</button>
-                                        <button id="p_iframe_x5" style="display:none;" onclick="p_p_iframe5Off();">cerrar</button>
-                                    </nav>
-                                    <!--hora-->
-                                    <iframe 
-                                        id="p_p_nav_iframe1" src="https://free.timeanddate.com/clock/i9v3v5c5/n232/tlcl/fn15/fs20/fc00ff88/tct/pct/ftb/th2" 
-                                        style="border:2px solid #00ff88; border-radius:15px;
-                                        display:none;" width="100%" height="80">
-                                    </iframe>
-                                    <!--resumen clima-->
-                                    <iframe 
-                                        id="p_p_nav_iframe2" 
-                                        src="https://wttr.in/Loncoche?format=%l:+%C+%t" 
-                                        style="border:1px solid #00ff88; 
-                                        background:#000;
-                                        color:#00ff88; border-radius:10px; 
-                                        padding:10px;
-                                        display:none;" width="100%" height="60">
-                                    </iframe>
-                                    <!--calendario-->
-                                    <iframe 
-                                        id="p_p_nav_iframe3"style="display:none;" src="https://calendar.google.com/calendar/embed?src=939ae17974b603fb17871e697be998ff769329c14f756ed5e72ce943788a4f34%40group.calendar.google.com&ctz=America%2FSantiago" style="border: 0" width="98%" height="110%" frameborder="0" scrolling="no">
-                                    </iframe>
-                                    <!--clima-->
-                                    <iframe 
-                                        id="p_p_nav_iframe4" src="https://www.meteored.cl/tiempo-en_Loncoche-America+Sur-Chile-Araucania--1-18249.html" frameborder="0" width="93%" height="93%" 
-                                        style="display:none;">
-                                    </iframe>
-                                    <!--Mapa-->
-                                    <iframe id="p_p_nav_iframe5"
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345!2d-72.65!3d-39.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9614a7d4b1a8b1c1%3A0x1!2sLoncoche%2C%20Araucan%C3%ADa!5e0!3m2!1ses!2scl!4v1700000000000"
-                                        width="100%" 
-                                        height="400" 
-                                        style="border:0; display:none;" 
-                                        allowfullscreen="" 
-                                        loading="lazy">
-                                    </iframe>
-                                </div>
-                                <!--
-                                    <iframe src="" 
-                                    frameborder="0"></iframe>
-                                -->
-                            </div>
-                            <div id="calculo" style="display:none;">
-                                <h1 id="calculo_h1">C&Aacute;LCULO
-                                    <button id="calculo_h1_x" onclick="calculoNo();">X</button>
-                                </h1>
-                                <nav id="calculo_nav">
-                                    <nav>
-                                        <button onclick="p_c_enlaces();">Enlaces</button>
-                                        <!--consumo de luz-->
-                                        <!--calcull de combustible-->
-                                        <!--calculo de IMC de salud-->
-                                        <!--dolar a peso chileno-->
-                                        <!--calculo de notas colegio o universidades-->
-                                        <!--calculo de edad y fechas-->
-                                        <!--calculo de superficies y metros cuadrados-->
-                                    </nav>
-                                </nav>
-                                <nav 
-                                    id="calculo_nav_enlaces" style="display:none;">
-                                    <button onclick="p_c_enlacesOff();">Cerrar</button>
-                                    <a 
-                                        href="https://1drv.ms/x/c/859092611fbe5986/IQCcE__hQBlUTJpz7wIWVDFBAYirjWzEeZzR3NV_0i_xFkU?e=Pa9ei1"target="_blank">
-                                    calculo excel</a>
-                                    <a 
-                                        href="https://play.google.com/store/apps/details?id=com.microblink.photomath" id="d_p_c_a1"target="_blank">
-                                    photomath playstore</a>
-                                    <a 
-                                        href="https://play.google.com/store/apps/details?id=com.microsoft.office.excel"target="_blank">
-                                    excel playStore</a>
-                                    <!--<a 
-                                        href=""target="_blank">
-                                    aaaaa</a>-->
-                                </nav>
-                                <div 
-                                    id="calculo_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <nav>
-                                        <button id="p_c_iframe_x1" style="display:none;" onclick="p_c_iframe1Off();">cerrar</button>
-                                        <button id="p_c_iframe_x2" style="display:none;" onclick="p_c_iframe2Off();">cerrar</button>
-                                        <button id="p_c_iframe_x3" style="display:none;" onclick="p_c_iframe3Off();">cerrar</button>
-                                    </nav>
-                                    <!--<!--bdd-->
-                                    <iframe    
-                                        id="p_c_nav_iframe1"style="display:none;" src="https://1drv.ms/x/c/859092611fbe5986/IQRNJXIexFHJTa3CJvzv0ndrATeNqHca05MtM9q-wGjU6dI" width="90%" height="90%" frameborder="0" scrolling="no">
-                                    </iframe>-->
-                                </div>
-                            </div>
-                            <div id="trabajo" style="display:none;">
-                                <h1 id="trabajo_h1">TRABAJO
-                                    <button id="trabajo_h1_x" onclick="trabajoNo();">X</button>
-                                </h1>
-                                <nav id="trabajo_nav">
-                                    <nav>
-                                        <!--
-                                            <button onclick="p_t_enlaces();">Enlaces</button>
-                                            <button onclick="p_t_iframe1();">vistaso</button>
-                                            <button onclick="p_t_iframe2();">vistaso</button>
-                                            <button onclick="p_t_iframe3();">vistaso</button>
-                                            <button onclick="p_t_iframe4();">vistaso</button>
-                                            <button onclick="p_t_iframe5();">vistaso</button>
-                                            <button onclick="p_t_iframe6();">vistaso</button>
-                                            <button onclick="p_t_iframe7();">vistaso</button>
-                                            <button onclick="p_t_iframe8();">vistaso</button>
-                                        -->
-                                    </nav>
-                                </nav>
-                                <nav id="trabajo_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="p_t_enlacesOff();">Cerrar
-                                    </button>
-                                    <!--o-->
-                                    <a 
-                                        href="https://olmue.bcnschool.net/" target="_blank">Olmue capacitacion
-                                    </a><!--rut-->
-                                    <a 
-                                        href="https://www.chileatiende.gob.cl/fichas/3310-certificado-de-afiliacion-a-una-afp"target="_blank">certificado afp
-                                    </a>1
-                                    <!--cv>
-                                    <a 
-                                        href=""target="_blank">cv
-                                    </a>
-                                    <!--<a 
-                                        href=""target="_blank">
-                                    </a>
-                                </nav>1
-                                <div id="trabajo_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <nav>
-                                        <button id="p_t_iframe_x1" style="display:none;" onclick="p_t_iframe1Off();">cerrar</button>
-                                        <button id="p_t_iframe_x2" style="display:none;" onclick="p_t_iframe2Off();">cerrar</button>
-                                        <button id="p_t_iframe_x3" style="display:none;" onclick="p_t_iframe3Off();">cerrar</button>
-                                        <button id="p_t_iframe_x4" style="display:none;" onclick="p_t_iframe4Off();">cerrar</button>
-                                        <button id="p_t_iframe_x5" style="display:none;" onclick="p_t_iframe5Off();">cerrar</button>
-                                        <button id="p_t_iframe_x6" style="display:none;" onclick="p_t_iframe6Off();">cerrar</button>
-                                        <button id="p_t_iframe_x7" style="display:none;" onclick="p_t_iframe7Off();">cerrar</button>
-                                        <button id="p_t_iframe_x8" style="display:none;" onclick="p_t_iframe8Off();">cerrar</button>
-                                    </nav>
-                                    <!--vistaso-->
-                                    <iframe    
-                                        id="p_t_nav_iframe1"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no">
-                                    </iframe>
-                                    <!--vistaso-->
-                                    <iframe 
-                                        id="p_t_nav_iframe2"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                    <!--vistaso-->
-                                    <iframe 
-                                        id="p_t_nav_iframe3"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                    <!--vistaso -->
-                                    <iframe    
-                                        id="p_t_nav_iframe4"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                    <!--vistaso -->
-                                    <iframe 
-                                        id="p_t_nav_iframe5"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                    <!--vistaso-->
-                                    <iframe 
-                                        id="p_t_nav_iframe6"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                    <!--vistaso -->
-                                    <iframe 
-                                        id="p_t_nav_iframe7"style="display:none;" src="" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                    <!--vistaso-->
-                                    <iframe 
-                                        id="p_t_nav_iframe8"style="display:none;"width="90%" height="90%" src="https://1drv.ms/u/c/859092611fbe5986/IQSBp_mYstuHRppCzJq47OrsAXxPl66rZ9eImijGDEL8Q3M" frameborder="0" scrolling="no"></iframe>
-                                </div>
-                            </div>
-                            <div id="salud" style="display:none;">
-                                <h1 id="salud_h1">SALUD
-                                    <button id="salud_h1_x" onclick="saludNo();">X</button>
-                                </h1>
-                                <nav id="salud_nav">
-                                    <nav>
-                                        <button onclick="p_s_enlaces();">Enlaces</button>
-                                        <button onclick="p_s_iframe1();">vistaso araucania sur hospital loncoche</button>
-                                    </nav>
-                                </nav>
-                                <nav id="salud_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="p_s_enlacesOff();">Cerrar</button>
-                                    <a 
-                                        href="https://telesalud.gob.cl/" target="_blank">Tele Salud (solicitar hora m&eacute;dica)</a>
-                                    <a 
-                                        href="https://www.chileatiende.gob.cl/fichas/15574-busca-tu-farmacia"
-                                    target="_blank">💊 Farmacias de Turno</a>
-                                    <!--<a 
-                                        href="" target="_blank">enlace</a>-->
-                                </nav>
-                                <div id="salud_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <button 
-                                        id="p_s_iframe_x1" style="display:none;" onclick="p_s_iframe1Off();">cerrar</button>
-                                    <button 
-                                        id="p_s_iframe_x2" style="display:none;" onclick="p_s_iframe2Off();">cerrar</button>
-                                    <!--vistaso araucaniasur.cl/hospital-de-loncoche-->
-                                    <iframe
-                                        id="p_s_nav_iframe1"style="display:none;"
-                                        src="https://www.araucaniasur.cl/hospital-de-loncoche/"
-                                        width="90%"
-                                        height="90%">
-                                    </iframe>
-                                </div>
-                            </div>
-                            <div id="juego" style="display:none;">
-                                <h1 id="juego_h1">SALUD
-                                    <button id="juego_h1_x" onclick="juegoNo();">X</button>
-                                </h1>
-                                <nav id="juego_nav">
-                                    <nav>
-                                        <button onclick="p_j_enlaces();">Enlaces</button>
-                                        <button onclick="p_j_iframe1();">vistaso DSLSPCTRA.BAT</button>
-                                    </nav>
-                                </nav>
-                                <nav id="juego_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="p_j_enlacesOff();">Cerrar</button>
-                                    <a 
-                                        href="https://blackxexo30.wixsite.com/dslspctrabat" target="_blank">dslspctra.batv</a>
-                                    <a 
-                                        href="https://blackxexo30.wixsite.com/website-5" target="_blank">dslspctra.bat vistaso 3ra persona (DSLSPCTRA.BAT)v</a>
-                                    <a 
-                                        href="https://classicgamezone.com/" target="_blank">Juegos clasicos de consolas</a>
-                                    <!--<a 
-                                        href="" target="_blank">enlace</a>-->
-                                </nav>
-                                <div id="juego_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <button id="p_j_iframe_x1" style="display:none;" onclick="p_j_iframe1Off();">cerrar</button>
-                                    <!---->
-                                    <iframe
-                                    id="p_j_nav_iframe1"style="display:none;" 
-                                    width="96%"height="93%" src="https://blackxexo30.wixsite.com/dslspctrabat" frameborder="0" scrolling="no"></iframe>
-                                    
-                                </div>
-                            </div>
-                            <div id="app" style="display:none;">
-                                <h1 id="app_h1">APP
-                                    <button id="app_h1_x" onclick="appNo();">X</button>
-                                </h1>
-                                <nav id="app_nav">
-                                    <nav>
-                                        <button onclick="p_ap_enlaces();">Enlaces</button>
-                                        <button onclick="p_ap_iframe1();">vistaso </button>
-                                    </nav>
-                                </nav>
-                                <nav id="app_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="p_ap_enlacesOff();">Cerrar</button>
-                                    <a 
-                                        id="d_p_ap_a1" href="https://onedrive.live.com/" 
-                                        target="_blank"
-                                        >Onedrive web</a>
-                                    <a href="https://play.google.com/store/apps/details?id=com.wix.admin" target="_blank" 
-                                        >Wix</a>
-                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.calculator" target="_blank"
-                                        1>calculadora</a>
-                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.docs" target="_blank"
-                                        >Drive</a>
-                                    <a href="https://play.google.com/store/apps/details?id=com.dropbox.android" target="_blank"
-                                        >Dropbox</a>
-                                    <a href="https://play.google.com/store/apps/details?id=com.microsoft.emmx" target="_blank"
-                                        >Edge</a>
-                                    <a href="https://play.google.com/store/apps/details?id=com.rhmsoft.code" target="_blank"
-                                        >Editor de c&oacute;digo</a>
-                                    <a href="https://play.google.com/store/apps/details?id=com.teacapps.barcodescanner" target="_blank"
-                                        >Lector de QR</a>
-                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.videos" target="_blank"
-                                        >google tv</a>
-                                    <!--
-
-                                    -->
-                                    <!--<a href="" target="_blank">enlace</a>-->
-                                </nav>
-                                <div id="app_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <button id="p_ap_iframe_x1" style="display:none;" onclick="p_ap_iframe1Off();">cerrar</button>
-                                    <!---->
-                                    <iframe
-                                        id="p_ap_nav_iframe1"style="display:none;"
-                                        src=""
-                                        width="90%"
-                                        height="90%"
-                                        frameborder="0">
-                                    </iframe>
-                                </div>
-                            </div>
-                            <div id="transmitir" style="display:none;">
-                                <h1 id="transmitir_h1">TRANSMITIR
-                                    <button id="transmitir_h1_x" onclick="transmitirNo();">X</button>
-                                </h1>
-                                <nav id="transmitir_nav">
-                                    <nav>
-                                        <button onclick="p_tr_enlaces();">Enlaces</button>
-                                        <button onclick="p_tr_iframe1();">Noticias</button>
-                                        <button onclick="p_tr_iframe7();">SujerenciasINVITADO</button>
-                                    </nav>
-                                </nav>
-                                <nav 
-                                    id="transmitir_nav_enlaces" style="display:none;">
-                                    <button onclick="p_tr_enlacesOff();">Cerrar</button>
-                                    <!--<a 
-                                        href="" target="_blank">enlace</a>-->
-                                    <a 
-                                        href="https://open.spotify.com/playlist/0cY5xrTP8QiBTEezEDpnLg?si=gM0wDutOSI-eM94DGIqw7A&utm_source=copy-link&pi=VXxYMp_5T7SXQ" target="_blank"
-                                        >radio domoelecgam</a>
-                                </nav>
-                                <div id="transmitir_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <nav>
-                                        <button id="p_tr_iframe_x1" style="display:none;" onclick="p_tr_iframe1Off();">cerrar</button>
-                                        <button id="p_tr_iframe_x2" style="display:none;" onclick="p_tr_iframe2Off();">cerrar</button>
-                                        <button id="p_tr_iframe_x3" style="display:none;" onclick="p_tr_iframe3Off();">cerrar</button>
-                                        <button id="p_tr_iframe_x4" style="display:none;" onclick="p_tr_iframe4Off();">cerrar</button>
-                                        <button id="p_tr_iframe_x5" style="display:none;" onclick="p_tr_iframe5Off();">cerrar</button>
-                                        <button id="p_tr_iframe_x6" style="display:none;" onclick="p_tr_iframe6Off();">cerrar</button>
-                                        <button id="p_tr_iframe_x7" style="display:none;" onclick="p_tr_iframe7Off();">cerrar</button>
-                                    </nav>
-                                    <!--Noticias-->
-                                    <iframe 
-                                        id="p_tr_nav_iframe1" style="display:none;" src="https://1drv.ms/w/c/859092611fbe5986/IQSEz_U2My6rRZjwpVeWKABEAf_KeM5mp2LU9F2hKt8xDrI" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                    <!--sujerencias invitado-->
-                                    <iframe id="p_tr_nav_iframe7"style="display:none;" src="https://1drv.ms/w/c/859092611fbe5986/IQTqSFvpMrPBTpjUNjX4HXdwAfIp9I1fJr7qEO0TlOTKZuA" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                
-                                </div>
-                            </div>
-                            <div id="contacto" style="display:none;">
-                                <h1 id="contacto_h1">CONTACTO
-                                    <button id="contacto_h1_x" onclick="contactoNo();">X</button>
-                                </h1>
-                                <nav id="contacto_nav">
-                                    <nav>
-                                        <button onclick="p_co_enlaces();">Enlaces</button>
-                                        <button onclick="p_co_iframe1();">Noticias</button>
-                                    </nav>
-                                </nav>
-                                <nav id="contacto_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="p_co_enlacesOff();">Cerrar</button>
-                                    <!--contacto--><a 
-                                        href="https://blackxexo30.wixsite.com/chat" target="_blank">contacto</a>
-                                    <!--<a 
-                                        href="" target="_blank">enlace</a>-->
-                                </nav>
-                                <div id="contacto_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <button id="p_co_iframe_x1" style="display:none;" onclick="p_co_iframe1Off();">cerrar</button>
-                                    <!--Noticias-->
-                                    <iframe id="p_co_nav_iframe1" style="display:none;" src="https://1drv.ms/w/c/859092611fbe5986/IQSEz_U2My6rRZjwpVeWKABEAf_KeM5mp2LU9F2hKt8xDrI" width="90%" height="90%" frameborder="0" scrolling="no"></iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!--a-->
-                <section>
-                    <div id="aprendizaje"style="display:none;">
-                        <h1 id="h1_aprendizaje">APRENDIZAJE
-                            <button id="h1_aprendizaje_x" onclick="aprendizajeNo();">X</button>
-                        </h1>
-                        <nav id="nav_aprendizaje">
-                            <button onclick="em();">EM</button>
-                            <button onclick="pds();">PDS</button>
-                            <button onclick="idjdlsdlud();">IDJDLSDLUD</button>
-                            <button onclick="iedmdi();">IEDMDI</button>
-                            <!--<button onclick="vpcmdcr();">VPCMDCR</button>
-                                <button onclick="os10();">OS10</button>
-                                <button onclick="ade();">ADE</button>
-                                <button onclick="ayci();">AYCI</button>
-                                <button onclick="ccdbl();">CCDBL</button>
-                                <button onclick="iedmdi();">IEDMDI</button>
-                                <button onclick="iem();">IEM</button>
-                                <button onclick="fO();">FO</button>
-                                <button onclick="to();">TO</button>-->
-                        </nav>
-                        <div id="aprender">
-                            <div id="em" style="display:none;">
-                                <h1 id="em_h1">Educaci&oacute;n Media
-                                    <button id="em_h1_x" onclick="emNo();">X</button>
-                                </h1>
-                                <nav id="em_nav">
-                                    <nav>
-                                        <button onclick="a_em_enlaces();">Enlaces</button>
-                                        <button onclick="a_em_iframe1();">Puntaje nacional</button>
-                                    </nav>
-                                </nav>
-                                <nav id="em_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="a_em_enlacesOff();">Cerrar</button>
-                                    <a 
-                                        href="https://aprendoenlinea.mineduc.gob.cl/"target="_blank"
-                                        >Aprendo en linea</a>
-                                    <!--<a 
-                                        href=""target="_blank">em</a>-->
-                                </nav>
-                                <!--iframes-->
-                                <div id="em_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <button 
-                                        id="a_iframe_x1" style="display:none;" onclick="a_em_iframe1Off();">cerrar</button>
-                                    <!--puntaje nacional-->
-                                    <iframe 
-                                        id="a_em_nav_iframe1" src="https://www.puntajenacional.cl/" 
-                                        style="border:2px solid #00ff88; border-radius:15px;
-                                        display:none;" width="90%" height="90%"></iframe>
-                                </div>
-                                <!--
-                                    <iframe src="" 
-                                    frameborder="0"></iframe>
-                                -->
-                            </div>
-                            <div id="pds" style="display:none;">
-                                <h1 id="pds_h1">P.de Software
-                                    <button id="pds_h1_x" onclick="pdsNo();">X</button>
-                                </h1>
-                                <nav id="pds_nav">
-                                    <nav>
-                                        <button onclick="a_pds_enlaces();">Enlaces</button>
-                                        <button onclick="a_pds_iframe1();">telefonica 1</button>
-                                    </nav>
-                                </nav>
-                                <nav id="pds_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="a_pds_enlacesOff();">Cerrar</button>
-                                    <!--<a href=""target="_blank"
-                                        >pds</a>-->
-                                </nav>
-                                <!--iframes-->
-                                <div id="pds_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <button 
-                                        id="a_pds_iframe_x1" style="display:none;" onclick="a_pds_iframe1Off();">cerrar</button>
-                                    <!---->
-                                    <iframe id="a_pds_nav_iframe1" display:none;" width="90%" height="90%" src="https://1drv.ms/b/c/859092611fbe5986/IQQX-m-gjbL0T6Qm4fX7JbK8AWgCCzWK0GEckcrzsgsQ8gk"  frameborder="0" scrolling="no"></iframe>
-                                </div>
-                                <!--
-                                    <iframe src="" 
-                                    frameborder="0"></iframe>
-                                -->
-                            </div>
-                            <div id="idjdlsdlud" style="display:none;">
-                                <h1 id="idjdlsdlud_h1">P.de Software
-                                    <button id="idjdlsdlud_h1_x" onclick="idjdlsdludNo();">X</button>
-                                </h1>
-                                <nav id="idjdlsdlud_nav">
-                                    <nav>
-                                        <button 
-                                            onclick="a_idjdlsdlud_enlaces();">Enlaces</button>
-                                        <button 
-                                            onclick="a_idjdlsdlud_iframe1();">cuadernoIDJDLSDLUD</button>
-                                        <button 
-                                            onclick="a_idjdlsdlud_iframe2();">biblioteca IDJDLSDLUD</button>
-                                    </nav>
-                                </nav>
-                                <nav id="idjdlsdlud_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="a_idjdlsdlud_enlacesOff();">Cerrar</button>
-                                    <a 
-                                        href="https://1drv.ms/x/c/859092611fbe5986/IQDhOGz75CIhTZJ9_5mggUxbAU9YgJ7b6FI0uPd-a0X3JUM?e=7iShdG"target="_blank"
-                                        >bddIDJDLSDLUD</a>
-                                    <a 
-                                        href="https://1drv.ms/w/c/859092611fbe5986/IQCnAcSuqugLS51FyIvSCXutAaMyApKr1tYwbFaSJT8pto8?e=BaD8DH"target="_blank"
-                                        >cuadernoIDJDLSDUD</a>
-                                    <!--<a href=""target="_blank"
-                                        >cuadernos IDJDLSDUD</a>-->
-                                </nav>
-                                <!--iframes-->
-                                <div id="idjdlsdlud_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <button 
-                                        id="a_idjdlsdlud_iframe_x1" 
-                                        style="display:none;" 
-                                        onclick="a_idjdlsdlud_iframe1Off();">
-                                    cerrar cuaderno idjdlsdludr</button>
-                                    <button 
-                                        id="a_idjdlsdlud_iframe_x2" 
-                                        style="display:none;" 
-                                        onclick="a_idjdlsdlud_iframe2Off();">
-                                    cerrar biblioteca idjdlsdlud</button>
-                                    <!--cuaderno IDJDLSDLUD-->
-                                    <iframe 
-                                        id="a_idjdlsdlud_nav_iframe1" 
-                                        display:none;" 
-                                        width="90%" 
-                                        height="90%" 
-                                        src="https://1drv.ms/w/c/859092611fbe5986/IQQkk38ynKBlSo2AVFpIIZSiAcpNKG_ttuXdOpEhjGj0TxY" frameborder="0"
-                                        scrolling="no">
-                                    </iframe>
-                                    <!--bibloteca idjdlsdlud-->
-                                    <iframe
-                                        id="a_idjdlsdlud_nav_iframe2"
-                                        style="display:block; width:90%; height:800px; border:none; overflow:auto;"
-                                        src="https://www.churchofjesuschrist.org/study?lang=spa"
-                                        scrolling="yes">
-                                    </iframe>
-                                </div>
-                                <!--
-                                    <iframe src="" 
-                                    frameborder="0"></iframe>
-                                -->
-                            </div>
-                            <div id="iedmdi" style="display:none;">
-                                <h1 id="iedmdi_h1">P.de Software
-                                    <button id="iedmdi_h1_x" onclick="iedmdiNo();">X</button>
-                                </h1>
-                                <nav id="iedmdi_nav">
-                                    <nav>
-                                        <button onclick="a_iedmdi_enlaces();">Enlaces</button>
-                                        <button onclick="a_iedmdi_iframe1();">cuaderno iedmdi</button>
-                                        <button onclick="a_iedmdi_iframe2();">biblioteca iedmdi</button>
-                                    </nav>
-                                </nav>
-                                <nav id="iedmdi_nav_enlaces" style="display:none;">
-                                    <button 
-                                        onclick="a_iedmdi_enlacesOff();">Cerrar</button>
-                                    <a 
-                                        href="" target="_blank"
-                                        >bdd iedmdi
-                                    </a>
-                                    <a 
-                                        href=""target="_blank"
-                                        >cuaderno iedmdi</a>
-                                    <!--<a href=""target="_blank"
-                                        >iedmdi</a>-->
-                                </nav>
-                                <!--iframes-->
-                                <div id="iedmdi_iframes" style="border:2px solid #00ff88; border-radius:15px; overflow:hidden; box-shadow:0 0 20px #00ff88;">
-                                    <button 
-                                        id="a_iedmdi_iframe_x1" 
-                                        style="display:none;" 
-                                        onclick="a_iedmdi_iframe1Off();">
-                                        cerrar cuaderno iedmdir
-                                    </button>
-                                    <!--cuaderno iedmdi-->
-                                    <iframe 
-                                        id="a_iedmdi_nav_iframe1" 
-                                        display:none;" 
-                                        width="90%" 
-                                        height="90%" 
-                                        src="" frameborder="0"
-                                        scrolling="no">
-                                    </iframe>
-                                </div>
-                                <!--
-                                    <iframe src="" 
-                                    frameborder="0"></iframe>
-                                -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </section>
-            <aside id="asideRight"></aside>
-        </article>
-        <article id="article3">
-            <aside id="asideFooterLeft"></aside>
-            <footer id="footer"></footer>
-            <aside id="asideFooterRight"></aside>
-        </article>
     </body>
 </html> 
